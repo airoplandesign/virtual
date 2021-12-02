@@ -1,32 +1,47 @@
-// @font-face {
-//     font-family: 'sbc-font';
-//     src: url('../fonts/sbc-font-Bold.woff2') format('woff2'),
-//         url('../fonts/sbc-font-Bold.woff') format('woff');
-//     font-weight: bold;
-//     font-style: normal;
-//     font-display: swap;
-// }
-
-// @font-face {
-//     font-family: 'sbc-font';
-//     src: url('../fonts/sbc-font-Regular.woff2') format('woff2'),
-//         url('../fonts/sbc-font-Regular.woff') format('woff');
-//     font-weight: normal;
-//     font-style: normal;
-//     font-display: swap;
-// }
-
-@mixin font-light {
-    // font-family: "NeueMachina", sans-serif;
-    font-weight: 300;
+@font-face {
+    font-family: 'din';
+    src: url('../static/fonts/GPN_DIN-Bold.ttf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
 }
+@font-face {
+    font-family: 'din';
+    src: url('../static/fonts/GPN_DIN-Regular.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+  font-family: 'din condensed';
+  src: url('../static/fonts/GPN_Helios_Condensed-Bold.ttf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'din condensed';
+  src: url('../static/fonts/GPN_Helios_Condensed-Regular.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @mixin font-regular {
-//   font-family: "NeueMachina", sans-serif;
-  font-weight: 300;
+  font-family: "din", sans-serif;
+  font-weight: normal;
 }
 @mixin font-bold {
-//   font-family: "NeueMachina", sans-serif;
-  font-weight: 300;
+  font-family: "din", sans-serif;
+  font-weight: bold;
+}
+@mixin font-condensed-regular {
+  font-family: "din condensed", sans-serif;
+  font-weight: normal;
+}
+@mixin font-condensed-bold {
+  font-family: "din condensed", sans-serif;
+  font-weight: bold;
 }
   
 $fonts: (

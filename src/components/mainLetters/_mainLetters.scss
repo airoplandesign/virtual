@@ -1,0 +1,32 @@
+.main-letters {
+    position: absolute;
+    top: 0; left: 0;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    will-change: transform;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    z-index: 1;
+
+    .main-letters__background {
+        width: 100%;
+        height: auto;
+        background: color('blue');
+        flex: 1;
+    }
+
+    .main-letters__mask {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.main__background {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: auto;
+    z-index: 0;
+}

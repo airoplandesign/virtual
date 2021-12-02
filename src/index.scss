@@ -4,10 +4,10 @@
 @import './styles/grid';
 @import './styles/normalize';
 
-html {
-  font-size: 0.8vw;
-}
+@import './components/mainLetters/mainLetters';
 
-body {
-  background: red;
+
+html {
+  scroll-behavior: smooth;
+  @include font-regular
 }

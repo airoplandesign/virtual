@@ -29,14 +29,9 @@ const paths = {
     dest: './build'
   },
 
-  images: {
-    src: './src/images/**',
-    dest: './build/images'
-  },
-
-  fonts: { 
-    src: './src/fonts/**',
-    dest: './build/fonts'
+  static: {
+    src: './src/static/**',
+    dest: './build/static'
   },
 
   delete: { 
@@ -98,15 +93,9 @@ export function scripts() {
     .pipe(browserSync.stream());
 }
 
-export function images() { 
-  return gulp.src(paths.images.src)
-    .pipe(gulp.dest(paths.images.dest))
-    .pipe(browserSync.stream());
-}
-
-export function fonts() { 
-  return gulp.src(paths.fonts.src)
-    .pipe(gulp.dest(paths.fonts.dest))
+export function staticData() { 
+  return gulp.src(paths.static.src)
+    .pipe(gulp.dest(paths.static.dest))
     .pipe(browserSync.stream());
 }
 
@@ -123,13 +112,12 @@ export function _watch() {
   });
 
   gulp.watch('./src/**/*.html', html); 
-  gulp.watch('./src/js/**/*.js', scripts);
-  gulp.watch('./src/scss/**/*.scss', styles);
-  gulp.watch('./src/images/**', images);
-  // gulp.watch('./src/fonts/**', fonts);
+  gulp.watch('./src/**/*.js', scripts);
+  gulp.watch('./src/**/*.scss', styles);
+  gulp.watch('./src/static/**', staticData);
   gulp.watch('./build/**/*.html', browserSync.reload); 
 
 }
 
-export const build =  gulp.series(clean, html, gulp.parallel(styles, scripts, images, fonts))
-export const watch = gulp.series(clean, html, gulp.parallel(styles, scripts, images, fonts), _watch)
+export const build =  gulp.series(clean, html, gulp.parallel(styles, scripts, staticData))
+export const watch = gulp.series(clean, html, gulp.parallel(styles, scripts, staticData), _watch)

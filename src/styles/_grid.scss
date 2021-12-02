@@ -1,0 +1,29 @@
+$breakpoints: (
+  xlg: 1920px,
+  lg: 1440px,
+  md: 1080px,
+  sm: 576px,
+);
+
+@function point($name) {
+  @return map-get($breakpoints, $name);
+}
+
+html {
+    font-size: 0.83333333333333vw;
+    padding: 0 spacing(64);
+  
+    @media screen and (max-width: point(xlg)) {
+      font-size: 0.83333333333333vw;
+    }
+    @media screen and (max-width: point(lg)) {
+      font-size: 0.83333333333333vw;
+    }
+    @media screen and (max-width: point(md)) {
+      font-size: 0.83333333333333vw;
+      padding: 0 spacing(16);
+    }
+    @media screen and (max-width: point(sm)) {
+      font-size: 5vw;
+    }
+}

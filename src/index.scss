@@ -1,0 +1,13 @@
+@import './styles/color';
+@import './styles/spacing';
+@import './styles/typography';
+@import './styles/grid';
+@import './styles/normalize';
+
+html {
+  font-size: 0.8vw;
+}
+
+body {
+  background: red;
+}

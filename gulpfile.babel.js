@@ -1,20 +1,14 @@
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const autoprefixer = require('gulp-autoprefixer');
-sass.compiler = require('node-sass'); 
-const sourcemaps = require('gulp-sourcemaps'); 
-const gulpif = require('gulp-if'); 
-const del = require('del');
-const argv = require('yargs').argv; 
-const browserSync = require('browser-sync');
-const gulpWatch = require('gulp-watch');
-const shorthand = require('gulp-shorthand'); 
-const gcmq = require('gulp-group-css-media-queries'); 
-const webpack = require('webpack-stream');
-const image = require('gulp-image');
-
-
-
+import gulp from 'gulp'
+// import sass from 'gulp-sass'
+const sass = require('gulp-sass')(require('sass'));
+import autoprefixer from 'gulp-autoprefixer'
+import sourcemaps from 'gulp-sourcemaps'
+import gulpif from 'gulp-if'
+import yargs from 'yargs'
+const argv = yargs.argv
+import browserSync from 'browser-sync'
+import webpack from 'webpack-stream'
+import del from 'del'
 
 const paths = {
 
@@ -26,12 +20,12 @@ const paths = {
   },
 
   styles: { 
-    main: './src/styles/main.scss',
+    main: './src/index.scss',
     dest: './build'
   },
 
   scripts: { 
-    main: './src/js/index.js',
+    main: './src/index.js',
     dest: './build'
   },
 
@@ -58,7 +52,7 @@ if (argv.lan) lan = true;
 
 let webConfig = {
     output: {
-      filename: 'all.js'
+      filename: 'index.js'
     },
     module: {
       rules: [
@@ -79,18 +73,16 @@ let webConfig = {
 };
 
 
-function html() {
+export function html() {
   return gulp.src(paths.html.src)
     .pipe(gulp.dest(paths.html.dest))
     .pipe(browserSync.stream());
 }
 
-function styles() { 
+export function styles() { 
   return gulp.src(paths.styles.main)
     .pipe(gulpif(argv.dev, sourcemaps.init()))
     .pipe(sass().on('error', sass.logError))
-    .pipe(shorthand())
-    .pipe(gcmq())
     .pipe(autoprefixer({
             cascade: false
         }))
@@ -99,42 +91,30 @@ function styles() {
     .pipe(browserSync.stream());
 }
 
-function scripts() {
+export function scripts() {
   return gulp.src(paths.scripts.main)
     .pipe(webpack(webConfig))
     .pipe(gulp.dest(paths.scripts.dest))
     .pipe(browserSync.stream());
 }
 
-function images() { 
+export function images() { 
   return gulp.src(paths.images.src)
-    .pipe(gulpif(!argv.dev,image({
-      pngquant: true,
-      optipng: false,
-      zopflipng: true,
-      jpegRecompress: false,
-      mozjpeg: true,
-      guetzli: false,
-      gifsicle: true,
-      svgo: false,
-      concurrent: 10,
-      quiet: true // defaults to false
-    })))
     .pipe(gulp.dest(paths.images.dest))
     .pipe(browserSync.stream());
 }
 
-function fonts() { 
+export function fonts() { 
   return gulp.src(paths.fonts.src)
     .pipe(gulp.dest(paths.fonts.dest))
     .pipe(browserSync.stream());
 }
 
-function clean() { 
+export function clean() { 
   return del([paths.delete.dest]);
 }
 
-function _watch() {
+export function _watch() {
   browserSync.init({ 
     server: {
       baseDir: "./build" 
@@ -151,14 +131,5 @@ function _watch() {
 
 }
 
-exports.styles = styles;
-exports.scripts = scripts;
-exports.html = html;
-exports.images = images;
-// exports.fonts = fonts;
-exports.clean = clean;
-exports._watch = _watch;
-
-
-gulp.task("build", gulp.series(clean, html, gulp.parallel(styles, scripts, images, fonts))); 
-gulp.task("watch", gulp.series(clean, html, gulp.parallel(styles, scripts, images, fonts), _watch)); 
+export const build =  gulp.series(clean, html, gulp.parallel(styles, scripts, images, fonts))
+export const watch = gulp.series(clean, html, gulp.parallel(styles, scripts, images, fonts), _watch)

@@ -2,6 +2,7 @@ const TWEEN = require('@tweenjs/tween.js')
 import { mainLetters } from './components/mainLetters/mainLetters'
 
 class Renderer {
+    screen = 0
     mouse = {
         moving: false,
         x: 0,
@@ -10,6 +11,7 @@ class Renderer {
     scroll = {
         scrolling: false,
         positions: [],
+        direction: null,
         times: [],
         velocity: 0,
         velocityMax: 0,
@@ -62,6 +64,7 @@ class Renderer {
             this.scroll.times[1] = timeNow
             this.scroll.positions[1] = positionNow
             newVelocityMax = -((this.scroll.positions[1] - this.scroll.positions[0]) / (this.scroll.times[1] - this.scroll.times[0])) * 500
+            this.scroll.direction = this.scroll.positions[1] - this.scroll.positions[0] > 0
             if (Math.abs(newVelocityMax) > Math.abs(this.scroll.velocityMax)) { 
                 this.scroll.velocityMax = newVelocityMax
                 TWEEN.removeAll()
@@ -71,7 +74,8 @@ class Renderer {
             this.scroll.times = [this.scroll.times[1], timeNow]
             this.scroll.positions = [this.scroll.positions[1], positionNow]
             newVelocityMax = -((this.scroll.positions[1] - this.scroll.positions[0]) / (this.scroll.times[1] - this.scroll.times[0])) * 500
-            if (Math.abs(newVelocityMax) > Math.abs(this.scroll.velocityMax))  { 
+            this.scroll.direction = this.scroll.positions[1] - this.scroll.positions[0] > 0
+            if (Math.abs(newVelocityMax) > Math.abs(this.scroll.velocityMax)) { 
                 this.scroll.velocityMax = newVelocityMax 
                 TWEEN.removeAll()
                 this.scroll.tween = []
@@ -99,7 +103,7 @@ class Renderer {
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
                 this.scroll.velocity = startObj.y
-                console.log(this.scroll.velocity)
+                // console.log(this.scroll.velocity)
             })
             .onComplete(() => {
                 // console.log('finish tween 2')
@@ -110,6 +114,15 @@ class Renderer {
             this.scroll.tween[0].chain(this.scroll.tween[1])
         }
         if (this.scroll.velocity === 0) this.scroll.scrolling = false
+    }
+
+    setScreen() {
+        if (this.screen > 0 || this.scroll.direction !== null) return
+        this.scroll.direction ? ++this.screen : --this.screen
+        window.scrollTo(0, window.innerHeight * this.screen)
+        console.log(this.screen)
+        
+        // document.scrollTop = window.innerHeight * this.screen
     }
 }
 
@@ -127,7 +140,8 @@ document.addEventListener('mousemove', function(e) {
     })
 })
 
-document.addEventListener('scroll', function() {
+document.addEventListener('scroll', function(e) {
+    // renderer.setScreen()
     renderer.setScrollPosition({
         scrolling: true
     })

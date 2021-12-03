@@ -46,12 +46,7 @@
   
 $fonts: (
   16: 1rem,
-  24: 1.5rem,
-  32: 2rem,
-  48: 3rem,
-  64: 4rem,
-  80: 5rem,
-  160: 10rem
+  36: 2.25rem,
 );
 :root {
     @each $name, $font in $fonts {
@@ -66,22 +61,6 @@ $fonts: (
 @mixin font-16 {
   font-size: font(16);
 }
-@mixin font-24 {
-  font-size: font(24);
+@mixin font-36 {
+  font-size: font(36);
 }
-@mixin font-32 {
-  font-size: font(32);
-}
-@mixin font-48 {
-  font-size: font(48);
-}
-@mixin font-64 {
-  font-size: font(64);
-}
-@mixin font-80 {
-  font-size: font(80);
-}
-@mixin font-160 {
-  font-size: font(160);
-}
-  

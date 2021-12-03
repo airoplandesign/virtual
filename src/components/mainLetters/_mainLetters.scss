@@ -14,7 +14,26 @@
         width: 100%;
         height: auto;
         background: color('blue');
+        display: flex;
         flex: 1;
+        justify-content: center;
+
+        &:first-child {
+            align-items: flex-end;
+            padding-bottom: 4rem;
+        }
+        &:last-child {
+            align-items: flex-start;
+            padding-top: 4rem;
+        }
+
+        h1, h2 {
+            @include font-condensed-regular;
+            @include font-36;
+            text-transform: lowercase;
+            color: color('white');
+            text-align: center;
+        }
     }
 
     .main-letters__mask {
@@ -23,10 +42,28 @@
     }
 }
 
-.main__background {
+.main-background {
     position: sticky;
     top: 0;
     width: 100%;
     height: auto;
     z-index: 0;
+
+    .main-background__layers {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+
+        .layer {
+            width: 100%;
+            height: auto;
+
+            &:not(:first-child) {
+                position: absolute;
+                width: 100%; height: 100%;
+                left: 0; top: 0;
+            }
+        }
+    }
 }

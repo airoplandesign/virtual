@@ -97,7 +97,7 @@ class Renderer {
         const startObj = {}
         const endObj = {}
         startObj.y = this.scroll.velocity
-        endObj.y = this.scroll.velocityMax
+        endObj.y = Math.abs(this.scroll.velocityMax) > 200 ? this.scroll.velocityMax / Math.abs(this.scroll.velocityMax) * 200 : this.scroll.velocityMax
 
         if (this.scroll.tween.length === 0 && Math.abs(this.scroll.velocityMax) > 0) {
             this.scroll.tween[0] = new TWEEN.Tween(startObj) 

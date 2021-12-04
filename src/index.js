@@ -3,6 +3,7 @@ import { mainLetters } from './components/mainLetters/mainLetters'
 
 class Renderer {
     screen = 0
+    swiping = false
     mouse = {
         moving: false,
         x: 0,
@@ -11,7 +12,8 @@ class Renderer {
     scroll = {
         scrolling: false,
         positions: [],
-        direction: null,
+        // direction: null,
+        // prevPosition: 0,
         times: [],
         velocity: 0,
         velocityMax: 0,
@@ -37,12 +39,24 @@ class Renderer {
     render() {
         requestAnimationFrame(function animate(time) {
             this.calculateScrollVelocity()
+            // console.log(window.pageYOffset)
+            // this.calculateScrollDirection()
             this.handlers.forEach(hd => hd(this.mouse, this.scroll))
             TWEEN.update(time)
             requestAnimationFrame(animate.bind(this))
         }.bind(this))
     }
 
+    // calculateScrollDirection() {
+    //     if (this.scroll.scrolling) {
+    //         if (this.scroll.prevPosition < window.pageYOffset) {
+    //             this.scroll.direction = true
+    //         } else if (this.scroll.prevPosition > window.pageYOffset) {
+    //             this.scroll.direction = false
+    //         }
+    //         this.scroll.prevPosition = window.pageYOffset
+    //     }
+    // }
     calculateScrollVelocity() {
         // if (!this.scroll.scrolling) return
         
@@ -63,8 +77,7 @@ class Renderer {
         } else if (this.scroll.times.length == 1) {
             this.scroll.times[1] = timeNow
             this.scroll.positions[1] = positionNow
-            newVelocityMax = -((this.scroll.positions[1] - this.scroll.positions[0]) / (this.scroll.times[1] - this.scroll.times[0])) * 500
-            this.scroll.direction = this.scroll.positions[1] - this.scroll.positions[0] > 0
+            newVelocityMax = -((this.scroll.positions[1] - this.scroll.positions[0]) / (this.scroll.times[1] - this.scroll.times[0])) * 100
             if (Math.abs(newVelocityMax) > Math.abs(this.scroll.velocityMax)) { 
                 this.scroll.velocityMax = newVelocityMax
                 TWEEN.removeAll()
@@ -73,8 +86,7 @@ class Renderer {
         } else {
             this.scroll.times = [this.scroll.times[1], timeNow]
             this.scroll.positions = [this.scroll.positions[1], positionNow]
-            newVelocityMax = -((this.scroll.positions[1] - this.scroll.positions[0]) / (this.scroll.times[1] - this.scroll.times[0])) * 500
-            this.scroll.direction = this.scroll.positions[1] - this.scroll.positions[0] > 0
+            newVelocityMax = -((this.scroll.positions[1] - this.scroll.positions[0]) / (this.scroll.times[1] - this.scroll.times[0])) * 100
             if (Math.abs(newVelocityMax) > Math.abs(this.scroll.velocityMax)) { 
                 this.scroll.velocityMax = newVelocityMax 
                 TWEEN.removeAll()
@@ -116,14 +128,24 @@ class Renderer {
         if (this.scroll.velocity === 0) this.scroll.scrolling = false
     }
 
-    setScreen() {
-        if (this.screen > 0 || this.scroll.direction !== null) return
-        this.scroll.direction ? ++this.screen : --this.screen
-        window.scrollTo(0, window.innerHeight * this.screen)
-        console.log(this.screen)
+    // setScreen() {
+    //     if (this.scroll.direction === null || this.swiping) return
+    //     this.swiping = true
+    //     this.scroll.direction ? ++this.screen : --this.screen
         
-        // document.scrollTop = window.innerHeight * this.screen
-    }
+    //     if (this.screen < 0) {
+    //         this.screen = 0
+    //         return
+    //     }
+    //     window.scrollTo(0, window.innerHeight * this.screen)
+    //     setTimeout(function($this) {
+    //         $this.swiping = false
+    //     }, 2500, this)
+    //     console.log(this.screen)
+    //     console.log(window.pageYOffset)
+        
+    //     // document.scrollTop = window.innerHeight * this.screen
+    // }
 }
 
 const renderer = new Renderer()

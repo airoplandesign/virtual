@@ -17,8 +17,8 @@ export const isElementVisible = (domElement) => {
 export const setMouseParallax = (domElement, mouse, translateCoef = 1) => {
     if (!isElementVisible(domElement)) return
     const EASE_COEF = 0.05
-    const translateX = (window.innerWidth / 2 - mouse.x) * 100 / window.innerWidth / 20 * translateCoef 
-    const translateY = (window.innerHeight / 2 - mouse.y) * 100 / window.innerHeight / 20 * translateCoef
+    const translateX = (window.innerWidth / 2 - mouse.x) * 100 / window.innerWidth / 50 * translateCoef 
+    const translateY = (window.innerHeight / 2 - mouse.y) * 100 / window.innerHeight / 50 * translateCoef
     let newTranslateX = domElement.style.transform.split(', ')[0]
     let newTranslateY = domElement.style.transform.split(', ')[1]
     newTranslateX = newTranslateX ? parseFloat(newTranslateX.replace('translate(', '').replace('%', '')) : 0 
@@ -37,11 +37,16 @@ export const setMouseParallax = (domElement, mouse, translateCoef = 1) => {
     domElement.style.transform = `translate(${newTranslateX}%, ${newTranslateY}%) scale(1.1)`
 }
 
-export const setScrollParallax = (domElement, { velocity, scrolling }, translateCoef = 1) => {
+export const setScrollParallax = (domElement, { velocity, scrolling }, translateCoef = 1, cb) => {
     if (!scrolling) return
-    if (!isElementVisible(domElement)) return
+    if (!isElementVisible(domElement)) { 
+        domElement.classList.remove('visible')   
+        return
+    }
+    if (!domElement.classList.contains('visible')) domElement.classList.add('visible')   
     let newTranslateX = domElement.style.transform.split(', ')[0]
     newTranslateX = newTranslateX ? parseFloat(newTranslateX.replace('translate(', '').replace('%', '')) : 0 
     const translateVelocity = velocity * translateCoef
     domElement.style.transform = `translate(${newTranslateX}%, ${translateVelocity}px) scale(1.1)`
+    if (typeof cb === "function") cb(domElement, { velocity, scrolling }, translateCoef)
 }

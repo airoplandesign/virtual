@@ -1,19 +1,18 @@
 const TWEEN = require('@tweenjs/tween.js')
+import { horizontalflow } from './components/horizontalFlow/horizontalFlow'
 import { mainLetters } from './components/mainLetters/mainLetters'
 
 class Renderer {
-    screen = 0
-    swiping = false
     mouse = {
         moving: false,
+        newTranslateX: 0,
+        newTranslateY: 0,
         x: 0,
         y: 0
     }
     scroll = {
         scrolling: false,
         positions: [],
-        // direction: null,
-        // prevPosition: 0,
         times: [],
         velocity: 0,
         velocityMax: 0,
@@ -39,24 +38,12 @@ class Renderer {
     render() {
         requestAnimationFrame(function animate(time) {
             this.calculateScrollVelocity()
-            // console.log(window.pageYOffset)
-            // this.calculateScrollDirection()
             this.handlers.forEach(hd => hd(this.mouse, this.scroll))
             TWEEN.update(time)
             requestAnimationFrame(animate.bind(this))
         }.bind(this))
     }
 
-    // calculateScrollDirection() {
-    //     if (this.scroll.scrolling) {
-    //         if (this.scroll.prevPosition < window.pageYOffset) {
-    //             this.scroll.direction = true
-    //         } else if (this.scroll.prevPosition > window.pageYOffset) {
-    //             this.scroll.direction = false
-    //         }
-    //         this.scroll.prevPosition = window.pageYOffset
-    //     }
-    // }
     calculateScrollVelocity() {
         // if (!this.scroll.scrolling) return
         
@@ -97,7 +84,7 @@ class Renderer {
         const startObj = {}
         const endObj = {}
         startObj.y = this.scroll.velocity
-        endObj.y = Math.abs(this.scroll.velocityMax) > 200 ? this.scroll.velocityMax / Math.abs(this.scroll.velocityMax) * 200 : this.scroll.velocityMax
+        endObj.y = Math.abs(this.scroll.velocityMax) > 100 ? this.scroll.velocityMax / Math.abs(this.scroll.velocityMax) * 100 : this.scroll.velocityMax
 
         if (this.scroll.tween.length === 0 && Math.abs(this.scroll.velocityMax) > 0) {
             this.scroll.tween[0] = new TWEEN.Tween(startObj) 
@@ -127,30 +114,12 @@ class Renderer {
         }
         if (this.scroll.velocity === 0) this.scroll.scrolling = false
     }
-
-    // setScreen() {
-    //     if (this.scroll.direction === null || this.swiping) return
-    //     this.swiping = true
-    //     this.scroll.direction ? ++this.screen : --this.screen
-        
-    //     if (this.screen < 0) {
-    //         this.screen = 0
-    //         return
-    //     }
-    //     window.scrollTo(0, window.innerHeight * this.screen)
-    //     setTimeout(function($this) {
-    //         $this.swiping = false
-    //     }, 2500, this)
-    //     console.log(this.screen)
-    //     console.log(window.pageYOffset)
-        
-    //     // document.scrollTop = window.innerHeight * this.screen
-    // }
 }
 
 const renderer = new Renderer()
 document.addEventListener('DOMContentLoaded', function() {
     renderer.setHandler(mainLetters)
+    renderer.setHandler(horizontalflow)
     renderer.render()
 })
 
@@ -163,7 +132,6 @@ document.addEventListener('mousemove', function(e) {
 })
 
 document.addEventListener('scroll', function(e) {
-    // renderer.setScreen()
     renderer.setScrollPosition({
         scrolling: true
     })

@@ -15,7 +15,6 @@ export const isElementVisible = (domElement) => {
 }
 
 export const setMouseParallax = (domElement, mouse, translateCoef = 1) => {
-    console.log(isElementVisible(domElement))
     if (!isElementVisible(domElement)) return
     const EASE_COEF = 0.05
     const translateX = (window.innerWidth / 2 - mouse.x) * 100 / window.innerWidth / 50 * translateCoef 

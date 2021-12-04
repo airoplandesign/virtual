@@ -7,8 +7,8 @@ let elementBackgroundHeight = 0, elementToWatchHeight = 0
 
 const elementBackroundLayers = document.querySelectorAll('.main-background__layers .layer')
 
-const elementToBlurMorz = document.querySelectorAll('.layer.morz img')
-const elementToBlurBear = document.querySelectorAll('.layer.bear img')
+const elementToBlurMorz = document.querySelectorAll('.layer.morz .img')
+const elementToBlurBear = document.querySelectorAll('.layer.bear .img')
 
 export function mainLetters(mouse, scroll) {
     if (elementBackgroundHeight !== elementBackgroundWrapper.getBoundingClientRect().height
@@ -30,10 +30,10 @@ export function mainLetters(mouse, scroll) {
         elementToBlurMorz[1].classList.add('hide')
     }
     // bear blur
-    if (window.pageYOffset + window.innerHeight >= elementBackgroundHeight + elementToWatchHeight * 1.5) {
-        elementToBlurBear[1].classList.remove('hide')
-    } else {
-        elementToBlurBear[1].classList.add('hide')
-    }
+    // if (window.pageYOffset + window.innerHeight >= elementBackgroundHeight + elementToWatchHeight * 1.5) {
+    //     elementToBlurBear[1].classList.remove('hide')
+    // } else {
+    //     elementToBlurBear[1].classList.add('hide')
+    // }
 }
 

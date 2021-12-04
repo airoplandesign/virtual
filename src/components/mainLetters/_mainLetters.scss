@@ -50,45 +50,57 @@
     z-index: 0;
 
     .main-background__layers {
-        position: relative;
         overflow: hidden;
         width: 100%;
         height: 200vh;
 
-        @media (min-aspect-ratio: 16/9) {
+        .flow-container {
+            position: relative;
             width: 100%;
-            height: auto;
-        }
+            height: 100%;
 
-        .layer {
-            width: 100%;
-            height: 200vh;
-
-            @media (min-aspect-ratio: 16/9) {
+            .layer {
                 width: 100%;
-                height: 100%;
-            }
-
-            &:not(:first-child) {
+                height: 200vh;
                 position: absolute;
                 left: 0; top: 0;
-
-                img {
-                    position: absolute;
-                    width: auto; height: 200vh;
-                    left: 50%; top: 0;
-                    transform: translateX(-50%);
-                    transition: opacity 1s ease;
     
-                    @media (min-aspect-ratio: 16/9) {
-                        width: 100%;
-                        height: auto;
-                        left: 0; transform: translateX(0);
+                .img {
+                    position: absolute;
+                    width: 100%; height: 200vh;
+                    left: 0; top: 0;
+                    transition: opacity 1s ease;
+                    background-position: center;
+                    background-size: cover;
+                }
+    
+                &:nth-child(1) {
+                    .img {
+                        background-image: url(../../static/images/main-letters/layer-1.png);
+                    }
+                }
+                &:nth-child(2) {
+                    .img:first-child {
+                        background-image: url(../../static/images/main-letters/layer-2-blur.png);
+                    }
+                    .img:last-child {
+                        background-image: url(../../static/images/main-letters/layer-2.png);
+                    }
+                }
+                &:nth-child(3) {
+                    .img {
+                        background-image: url(../../static/images/main-letters/layer-3.png);
+                    }
+                }
+                &:nth-child(4) {
+                    .img:first-child {
+                        background-image: url(../../static/images/main-letters/layer-4-blur.png);
+                    }
+                    .img:last-child {
+                        background-image: url(../../static/images/main-letters/layer-4.png);
                     }
                 }
             }
-
-
         }
 
         .hide {

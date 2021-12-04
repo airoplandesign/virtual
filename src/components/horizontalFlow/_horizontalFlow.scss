@@ -1,0 +1,66 @@
+.horizontal-flow {
+    margin-top: -100vh;
+
+    .horizontal-flow__layers {
+        position: sticky;
+        top: 0; left: 0;
+        overflow: hidden;
+        width: 100%;
+        height: 100vh;
+
+        .flow-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: stretch;
+            width: auto;
+            height: 100%;
+
+            .horizontal-flow__screen {
+                position: relative;
+                width: auto;
+                height: 100%;
+
+                .layer {
+                    width: auto;
+                    height: 100%;
+
+                    &:not(:first-child) {
+                        position: absolute;
+                        left: 0; top: 0;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .img {
+                        width: 100%;
+                        height: 100%;
+                        transition: opacity 1s ease;
+                        background-position: left center;
+                        background-size: cover;
+                    }
+
+                    img {
+                        height: 100%;
+                        width: auto;
+                    }
+
+                    &:nth-child(3) {
+                        .img {
+                            background-image: url(../../static/images/horizontal-flow/layer-1.png);
+                        }
+                    }
+                    &:nth-child(2) {
+                        .img {
+                            background-image: url(../../static/images/horizontal-flow/layer-2.png);
+                        }
+                    }
+                    // &:nth-child(1) {
+                    //     .img {
+                    //         background-image: url(../../static/images/horizontal-flow/layer-3.png);
+                    //     }
+                    // }
+                }
+            }
+        }
+    }
+}

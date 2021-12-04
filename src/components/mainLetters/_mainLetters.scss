@@ -76,28 +76,28 @@
     
                 &:nth-child(1) {
                     .img {
-                        background-image: url(../../static/images/main-letters/layer-1.png);
+                        background-image: url(./static/images/main-letters/layer-1.png);
                     }
                 }
                 &:nth-child(2) {
                     .img:first-child {
-                        background-image: url(../../static/images/main-letters/layer-2-blur.png);
+                        background-image: url(./static/images/main-letters/layer-2-blur.png);
                     }
                     .img:last-child {
-                        background-image: url(../../static/images/main-letters/layer-2.png);
+                        background-image: url(./static/images/main-letters/layer-2.png);
                     }
                 }
                 &:nth-child(3) {
                     .img {
-                        background-image: url(../../static/images/main-letters/layer-3.png);
+                        background-image: url(./static/images/main-letters/layer-3.png);
                     }
                 }
                 &:nth-child(4) {
                     .img:first-child {
-                        background-image: url(../../static/images/main-letters/layer-4-blur.png);
+                        background-image: url(./static/images/main-letters/layer-4-blur.png);
                     }
                     .img:last-child {
-                        background-image: url(../../static/images/main-letters/layer-4.png);
+                        background-image: url(./static/images/main-letters/layer-4.png);
                     }
                 }
             }

@@ -178,22 +178,22 @@ ul {
   background-size: cover;
 }
 .main-background .main-background__layers .flow-container .layer:nth-child(1) .img {
-  background-image: url(../../static/images/main-letters/layer-1.png);
+  background-image: url(./static/images/main-letters/layer-1.png);
 }
 .main-background .main-background__layers .flow-container .layer:nth-child(2) .img:first-child {
-  background-image: url(../../static/images/main-letters/layer-2-blur.png);
+  background-image: url(./static/images/main-letters/layer-2-blur.png);
 }
 .main-background .main-background__layers .flow-container .layer:nth-child(2) .img:last-child {
-  background-image: url(../../static/images/main-letters/layer-2.png);
+  background-image: url(./static/images/main-letters/layer-2.png);
 }
 .main-background .main-background__layers .flow-container .layer:nth-child(3) .img {
-  background-image: url(../../static/images/main-letters/layer-3.png);
+  background-image: url(./static/images/main-letters/layer-3.png);
 }
 .main-background .main-background__layers .flow-container .layer:nth-child(4) .img:first-child {
-  background-image: url(../../static/images/main-letters/layer-4-blur.png);
+  background-image: url(./static/images/main-letters/layer-4-blur.png);
 }
 .main-background .main-background__layers .flow-container .layer:nth-child(4) .img:last-child {
-  background-image: url(../../static/images/main-letters/layer-4.png);
+  background-image: url(./static/images/main-letters/layer-4.png);
 }
 .main-background .main-background__layers .hide {
   opacity: 0 !important;
@@ -249,10 +249,10 @@ ul {
   width: auto;
 }
 .horizontal-flow .horizontal-flow__layers .flow-container .horizontal-flow__screen .layer:nth-child(3) .img {
-  background-image: url(../../static/images/horizontal-flow/layer-1.png);
+  background-image: url(./static/images/horizontal-flow/layer-1.png);
 }
 .horizontal-flow .horizontal-flow__layers .flow-container .horizontal-flow__screen .layer:nth-child(2) .img {
-  background-image: url(../../static/images/horizontal-flow/layer-2.png);
+  background-image: url(./static/images/horizontal-flow/layer-2.png);
 }
 
 html {

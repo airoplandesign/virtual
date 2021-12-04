@@ -46,17 +46,17 @@
 
                     &:nth-child(3) {
                         .img {
-                            background-image: url(../../static/images/horizontal-flow/layer-1.png);
+                            background-image: url(./static/images/horizontal-flow/layer-1.png);
                         }
                     }
                     &:nth-child(2) {
                         .img {
-                            background-image: url(../../static/images/horizontal-flow/layer-2.png);
+                            background-image: url(./static/images/horizontal-flow/layer-2.png);
                         }
                     }
                     // &:nth-child(1) {
                     //     .img {
-                    //         background-image: url(../../static/images/horizontal-flow/layer-3.png);
+                    //         background-image: url(./static/images/horizontal-flow/layer-3.png);
                     //     }
                     // }
                 }

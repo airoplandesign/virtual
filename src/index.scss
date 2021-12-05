@@ -6,9 +6,9 @@
 
 @import './components/mainLetters/mainLetters';
 @import './components/horizontalFlow/horizontalFlow';
-
+@import './components/timeLaps/timeLaps';
 
 html {
   scroll-behavior: smooth;
-  @include font-regular
+  @include font-regular;
 }

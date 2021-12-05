@@ -1,12 +1,11 @@
 const TWEEN = require('@tweenjs/tween.js')
 import { horizontalflow } from './components/horizontalFlow/horizontalFlow'
 import { mainLetters } from './components/mainLetters/mainLetters'
+import { timeLaps } from './components/timeLaps/timeLaps'
 
 class Renderer {
     mouse = {
         moving: false,
-        newTranslateX: 0,
-        newTranslateY: 0,
         x: 0,
         y: 0
     }
@@ -37,16 +36,14 @@ class Renderer {
 
     render() {
         requestAnimationFrame(function animate(time) {
-            this.calculateScrollVelocity()
+            this.#calculateScrollVelocity()
             this.handlers.forEach(hd => hd(this.mouse, this.scroll))
             TWEEN.update(time)
             requestAnimationFrame(animate.bind(this))
         }.bind(this))
     }
 
-    calculateScrollVelocity() {
-        // if (!this.scroll.scrolling) return
-        
+    #calculateScrollVelocity() {
         const EASE_COEF = 0.05
 
         const translateY = window.pageYOffset
@@ -93,19 +90,14 @@ class Renderer {
             .onUpdate(() => {
                 this.scroll.velocity = startObj.y
             })
-            .onComplete(() => {
-                // console.log('finish tween 1')
-            })
             .start()
             this.scroll.tween[1] = new TWEEN.Tween(startObj) 
             .to({y: 0}, 800)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
                 this.scroll.velocity = startObj.y
-                // console.log(this.scroll.velocity)
             })
             .onComplete(() => {
-                // console.log('finish tween 2')
                 TWEEN.removeAll()
                 this.scroll.tween = []
                 this.scroll.velocityMax = 0
@@ -120,6 +112,7 @@ const renderer = new Renderer()
 document.addEventListener('DOMContentLoaded', function() {
     renderer.setHandler(mainLetters)
     renderer.setHandler(horizontalflow)
+    renderer.setHandler(timeLaps)
     renderer.render()
 })
 

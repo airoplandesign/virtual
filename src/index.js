@@ -1,6 +1,7 @@
 const TWEEN = require('@tweenjs/tween.js')
 import { horizontalflow } from './components/horizontalFlow/horizontalFlow'
 import { mainLetters } from './components/mainLetters/mainLetters'
+import { platformMenu } from './components/platformMenu/platformMenu'
 import { timeLaps } from './components/timeLaps/timeLaps'
 
 class Renderer {
@@ -113,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderer.setHandler(mainLetters)
     renderer.setHandler(horizontalflow)
     renderer.setHandler(timeLaps)
+    renderer.setHandler(platformMenu)
     renderer.render()
 })
 

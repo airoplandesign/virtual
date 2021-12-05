@@ -1,6 +1,6 @@
 .time-laps {
     width: 100%;
-    height: 600vh;
+    height: 1500vh;
     margin-top: -100vh;
 
     .time-laps__stages {
@@ -24,6 +24,12 @@
             height: 100%;
             background-size: cover;
             background-position: center;
+        }
+
+        &#whalies, &#ice {
+            .img {
+                opacity: 0;
+            }
         }
     }
 

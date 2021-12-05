@@ -107,6 +107,10 @@ class Renderer {
         }
         if (this.scroll.velocity === 0) this.scroll.scrolling = false
     }
+
+    #preventMobileVerticalOrientation() {
+        
+    }
 }
 
 const renderer = new Renderer()

@@ -1,6 +1,8 @@
+@charset "UTF-8";
 :root {
   --color-white: #FFFFFF;
   --color-blue: #005EB8;
+  --color-orange: #F18A00;
   --color-black: #120C1F;
 }
 
@@ -47,6 +49,7 @@
 :root {
   --font-size-16: 1rem;
   --font-size-36: 2.25rem;
+  --font-size-40: 2.5rem;
 }
 
 html {
@@ -59,12 +62,12 @@ html {
 }
 @media screen and (max-width: 1440px) {
   html {
-    font-size: 0.8333333333vw;
+    font-size: 1vw;
   }
 }
 @media screen and (max-width: 1080px) {
   html {
-    font-size: 0.8333333333vw;
+    font-size: 1vw;
   }
 }
 @media screen and (max-width: 576px) {
@@ -369,8 +372,179 @@ ul {
   background-image: url(./static/images/platform-menu/platform-layer.png);
 }
 
+.platform-menu .platform-menu__controls {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: stretch;
+  justify-content: stretch;
+  padding: 4rem;
+}
+.platform-menu .platform-menu__controls .header__content:last-child {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: start;
+  justify-content: start;
+}
+.platform-menu .platform-menu__controls .header {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.platform-menu .platform-menu__controls .header h1 {
+  font-family: "din", sans-serif;
+  font-weight: normal;
+  font-size: 2.25rem;
+  color: #005EB8;
+  width: 19.5rem;
+}
+.platform-menu .platform-menu__controls .header .compass {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+}
+.platform-menu .platform-menu__controls .header .compass svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.platform-menu .platform-menu__controls .header .sound {
+  position: relative;
+  width: 6rem;
+  height: 6rem;
+  cursor: pointer;
+}
+.platform-menu .platform-menu__controls .header .sound svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s;
+}
+.platform-menu .platform-menu__controls .header .sound svg#soundOn {
+  opacity: 0;
+}
+.platform-menu .platform-menu__controls .header .logo {
+  width: auto;
+  height: 4rem;
+  margin-left: 4rem;
+}
+
+.platform-menu .platform-menu__controls .navigation {
+  width: 100%;
+  height: 100%;
+  -ms-flex: 1;
+  flex: 1;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  margin-top: 4rem;
+}
+.platform-menu .platform-menu__controls .navigation__content {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.platform-menu .platform-menu__controls .navigation__content:first-child {
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+.platform-menu .platform-menu__controls .navigation__content:first-child a:before {
+  left: 0;
+}
+.platform-menu .platform-menu__controls .navigation__content:last-child {
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+.platform-menu .platform-menu__controls .navigation__content:last-child a:before {
+  right: 0;
+}
+.platform-menu .platform-menu__controls .navigation__content a {
+  position: relative;
+  font-family: "din", sans-serif;
+  font-weight: normal;
+  font-size: 2.5rem;
+  color: #005EB8;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.platform-menu .platform-menu__controls .navigation__content a:before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  width: 20.625rem;
+  height: 2px;
+  background-color: #005EB8;
+  transition: background-color 0.3s ease;
+}
+.platform-menu .platform-menu__controls .navigation__content a:hover {
+  color: #F18A00;
+}
+.platform-menu .platform-menu__controls .navigation__content a:hover:before {
+  background-color: #F18A00;
+}
+.platform-menu .platform-menu__controls .navigation__content a:not(:first-child) {
+  margin-top: 5rem;
+}
+
 html {
   scroll-behavior: smooth;
   font-family: "din", sans-serif;
   font-weight: normal;
+}
+
+@media screen and (orientation: portrait) {
+  html, body {
+    overflow: hidden;
+  }
+}
+
+.root:before {
+  content: "Используйте сайт в горизонтальной ориентации!";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #005EB8;
+  color: #FFFFFF;
+  font-size: 3rem;
+  font-family: "din", sans-serif;
+  font-weight: normal;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+@media screen and (max-width: 576px) {
+  .root:before {
+    font-size: 1rem;
+  }
+}
+@media screen and (orientation: portrait) {
+  .root:before {
+    opacity: 1;
+    visibility: visible;
+  }
 }

@@ -72,3 +72,131 @@
         }
     }
 }
+
+
+.platform-menu .platform-menu__controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    padding: 4rem;
+
+    .header__content:last-child {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 {
+            @include font-regular;
+            @include font-36;
+            color: color('blue');
+            width: 19.5rem;
+        }
+
+        .compass {
+            position: relative;
+            width: 10rem;
+            height: 10rem;
+            svg {
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .sound {
+            position: relative;
+            width: 6rem;
+            height: 6rem;
+            cursor: pointer;
+
+            svg {
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%;
+                height: 100%; 
+                transition: opacity .3s;
+            }
+
+            svg#soundOn {
+                opacity: 0;
+            }
+        }
+
+        .logo {
+            width: auto;
+            height: 4rem;
+            margin-left: 4rem;
+        }
+    }
+}
+
+.platform-menu .platform-menu__controls {
+    .navigation {
+        width: 100%;
+        height: 100%;
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 4rem;
+    }
+
+    .navigation__content {
+        display: flex;
+        flex-direction: column;
+
+        &:first-child {
+            align-items: flex-start;
+
+            a:before {
+                left: 0;
+            }
+        }
+        &:last-child {
+            align-items: flex-end;
+
+            a:before {
+                right: 0;
+            }
+        }
+
+        a {
+            position: relative;
+            @include font-regular;
+            @include font-40;
+            color: color('blue');
+            cursor: pointer;
+            transition: color .3s ease;
+
+            &:before {
+                content: '';
+                position: absolute;
+                bottom: calc(100% + .5rem);
+                width: 20.625rem;
+                height: 2px;
+                background-color: color('blue');
+                transition: background-color .3s ease;
+            }
+
+            &:hover {
+                color: color('orange');
+
+                &:before {
+                    background-color: color('orange');
+                }
+            }
+
+            &:not(:first-child) {
+                margin-top: 5rem;
+            }
+        }
+    }
+}

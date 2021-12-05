@@ -257,7 +257,7 @@ ul {
 
 .time-laps {
   width: 100%;
-  height: 600vh;
+  height: 1500vh;
   margin-top: -100vh;
 }
 .time-laps .time-laps__stages {
@@ -280,6 +280,9 @@ ul {
   height: 100%;
   background-size: cover;
   background-position: center;
+}
+.time-laps .stage-layers .layer#whalies .img, .time-laps .stage-layers .layer#ice .img {
+  opacity: 0;
 }
 .time-laps .stage-layers {
   opacity: 0;
@@ -307,6 +310,63 @@ ul {
 }
 .time-laps .stage-layers:nth-child(3) .layer:nth-child(3) .img {
   background-image: url(./static/images/time-laps/platform-view/layer-3.png);
+}
+
+.platform-menu {
+  position: relative;
+  width: 100%;
+  height: 300vh;
+  margin-top: -100vh;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.platform-menu .platform-menu__wrapper {
+  position: -webkit-sticky;
+  position: sticky;
+  height: 100vh;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+.platform-menu .platform-menu__controls, .platform-menu .platform-menu__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.platform-menu .platform-menu__controls {
+  z-index: 2;
+}
+.platform-menu .platform-menu__background {
+  z-index: 1;
+}
+.platform-menu .platform-menu__background canvas, .platform-menu .platform-menu__background .platform-menu__layers, .platform-menu .platform-menu__background .layer,
+.platform-menu .platform-menu__background .layer .img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.platform-menu .layer .img {
+  background-size: cover;
+  background-position: center;
+}
+.platform-menu .platform-menu__layers .layer:nth-child(1) .img {
+  background-image: url(./static/images/platform-menu/layer-4.png);
+}
+.platform-menu .platform-menu__layers .layer:nth-child(2) .img {
+  background-image: url(./static/images/platform-menu/layer-3.png);
+}
+.platform-menu .platform-menu__layers .layer:nth-child(3) .img {
+  background-image: url(./static/images/platform-menu/layer-2.png);
+}
+.platform-menu .platform-menu__layers .layer:nth-child(4) .img {
+  background-image: url(./static/images/platform-menu/layer-1.png);
+}
+.platform-menu .platform-menu__layers .layer#addModelInstead .img {
+  background-image: url(./static/images/platform-menu/platform-layer.png);
 }
 
 html {

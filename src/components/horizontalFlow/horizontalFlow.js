@@ -13,7 +13,7 @@ let elementBackgroundWidth = 0
 export function horizontalflow(mouse, scroll) {
     if (elementBackgroundWidth !== horizontalFlowScreenCoords.width)  {
         elementBackgroundWidth = horizontalFlowScreenCoords.width
-        horizontalFlowContainer.style.height = `${elementBackgroundWidth + window.innerWidth * 2}px` // when innerHeight we will start zooming
+        horizontalFlowContainer.style.height = `${elementBackgroundWidth + window.innerWidth + window.innerHeight}px` // when innerHeight we will start zooming
     }
 
     Array.from(elementBackroundLayers).forEach((layer, idx) => {
@@ -31,7 +31,8 @@ export function horizontalflow(mouse, scroll) {
         return
     }
 
-    if (translate < horizontalFlowScreenCoords.width * 1.1 * 2/3) {  //1.1 its a scale parameter
+
+    if (translate < elementBackgroundWidth - window.innerWidth) {
         [mainBackgroundContainer, horizontalBackgroundContainer].forEach(container => {
             container.style.transform = `translateX(${-translate}px)`
         })
@@ -40,14 +41,16 @@ export function horizontalflow(mouse, scroll) {
     }
 
     // scale to birds
-    const scaleParameter = 0.75 // max scale
-    const scaleTranslate = translate - horizontalFlowScreenCoords.width * 1.1 * 2/3
-    const scaleTranslateMax = (horizontalFlowScreenCoords.width + window.innerWidth) - (horizontalFlowScreenCoords.width * 1.1 * 2/3)
+    const scaleParameter = 1 // max scale
+    const scaleTranslate = translate - (elementBackgroundWidth - window.innerWidth)
+    const scaleTranslateMax = (elementBackgroundWidth + window.innerWidth) - (elementBackgroundWidth - window.innerWidth)
     const scale = scaleTranslate / scaleTranslateMax * scaleParameter
 
     const opacityParameter = 1
     const opacity = scaleTranslate / scaleTranslateMax * opacityParameter
-    if (translate < horizontalFlowScreenCoords.width + window.innerWidth) {
+
+    if (scale < 0) return
+    if (translate <  elementBackgroundWidth + window.innerWidth) {
         horizontalBackgroundContainer.style.transform = 
                         `
                             translateX(${-translate}px) 

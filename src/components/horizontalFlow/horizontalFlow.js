@@ -7,12 +7,12 @@ const horizontalBackgroundContainer = document.querySelector('.horizontal-flow__
 const horizontalFlowContainer = document.querySelector('.horizontal-flow')
 
 const horizontalFlowScreen = document.querySelector('.horizontal-flow__screen')
-const horizontalFlowScreenCoords = getElementCoords(horizontalFlowScreen)
+const scalabelContainer = document.querySelector('.horizontal-flow__screen .scalabel-container')
 let elementBackgroundWidth = 0
 
 export function horizontalflow(mouse, scroll) {
-    if (elementBackgroundWidth !== horizontalFlowScreenCoords.width)  {
-        elementBackgroundWidth = horizontalFlowScreenCoords.width
+    if (elementBackgroundWidth !== horizontalFlowScreen.getBoundingClientRect().width)  {
+        elementBackgroundWidth = horizontalFlowScreen.getBoundingClientRect().width
         horizontalFlowContainer.style.height = `${elementBackgroundWidth + window.innerWidth + window.innerHeight}px` // when innerHeight we will start zooming
     }
 
@@ -37,34 +37,39 @@ export function horizontalflow(mouse, scroll) {
             container.style.transform = `translateX(${-translate}px)`
         })
         horizontalBackgroundContainer.style.opacity = ''
+        scalabelContainer.style.transform = ''
         return
     }
 
     // scale to birds
     const scaleParameter = 1 // max scale
-    const scaleTranslate = translate - (elementBackgroundWidth - window.innerWidth)
-    const scaleTranslateMax = (elementBackgroundWidth + window.innerWidth) - (elementBackgroundWidth - window.innerWidth)
+    let scaleTranslate = translate - (elementBackgroundWidth - window.innerWidth)
+    const scaleTranslateMax = window.innerWidth * 2
     const scale = scaleTranslate / scaleTranslateMax * scaleParameter
 
     const opacityParameter = 1
-    const opacity = scaleTranslate / scaleTranslateMax * opacityParameter
+    const opacity = scaleTranslate / (scaleTranslateMax / 1.25) * opacityParameter
 
     if (scale < 0) return
-    if (translate <  elementBackgroundWidth + window.innerWidth) {
-        horizontalBackgroundContainer.style.transform = 
+    if (scaleTranslate < elementBackgroundWidth + window.innerWidth + window.innerHeight) {
+        horizontalBackgroundContainer.style.opacity = 1 - opacity
+        if (scaleTranslate - window.innerHeight < 0) scaleTranslate = 1 + window.innerHeight
+        scalabelContainer.style.transform = 
                         `
-                            translateX(${-translate}px) 
+                            translateX(${-(scaleTranslate - window.innerHeight)}px) 
                             scale(${1 + scale})
                         `
-        horizontalBackgroundContainer.style.opacity = 1 - opacity
-        return
+    horizontalBackgroundContainer.style.transform = 
+    `
+        translateX(${-(elementBackgroundWidth - window.innerWidth)}px) 
+    `
+    return
     }
 
     // basic if scrolled more
     horizontalBackgroundContainer.style.transform = 
     `
-        translateX(${-(horizontalFlowScreenCoords.width + window.innerWidth)}px) 
-        scale(${1 + scaleParameter})
+        translateX(${-(elementBackgroundWidth - window.innerWidth)}px) 
     `
     horizontalBackgroundContainer.style.opacity = 0
 }

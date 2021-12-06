@@ -18,13 +18,17 @@ export function platformMenu(mouse, scroll) {
 
     if (translate < 0) return
 
+    if (translate <= translateMax / 3) {
+        platformMenuContainer.style.opacity = 0
+        return
+    }
+
     const opacityParameter = 1
-    platformMenuContainer.style.opacity = 0
     // appear of platform-menu
     if (translate < translateMax / 2) {
         const opacity = translate / (translateMax / 2) * opacityParameter
     
-        console.log(opacity)
+        // console.log(opacity)
         platformMenuContainer.style.opacity = 0 + opacity
         if (platformMenuContainer.classList.contains('visible')) platformMenuContainer.classList.remove('visible')
         return

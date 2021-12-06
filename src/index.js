@@ -1,10 +1,14 @@
 const TWEEN = require('@tweenjs/tween.js')
+import gsap from 'gsap'
 import { horizontalflow } from './components/horizontalFlow/horizontalFlow'
 import { mainLetters } from './components/mainLetters/mainLetters'
 import { platformMenu } from './components/platformMenu/platformMenu'
 import { timeLaps } from './components/timeLaps/timeLaps'
 
+import { createScreensHeight } from './functions'
+
 class Renderer {
+    swipeDuration = 1500
     mouse = {
         moving: false,
         x: 0,
@@ -16,7 +20,19 @@ class Renderer {
         times: [],
         velocity: 0,
         velocityMax: 0,
-        tween: []
+        tween: [],
+    }
+    screenScrollProps = {
+        isActive: false,
+        screensHeight: [],
+        activeScreen: 0,
+        direction: null,
+        swiping: false,
+        pageY: null,
+        newPageY: null,
+        prevWheeling: false,
+        wheeling: false,
+        wheelingTimeout: null
     }
     constructor(handler = []) {
         this.handlers = handler
@@ -31,16 +47,35 @@ class Renderer {
     }
 
     setScrollPosition(scroll) {
+        this.screenScrollProps.wheeling = true
+
+        clearTimeout(this.screenScrollProps.wheelingTimeout);
+        this.screenScrollProps.wheelingTimeout = setTimeout(function($this) {
+            $this.screenScrollProps.wheeling = false;
+        }, 10, this);
+
         this.scroll.scrolling = scroll.scrolling
+        this.screenScrollProps.direction = scroll.direction || null
+        this.screenScrollProps.newPageY = scroll.pageY
         this.mouse.moving = false
     }
 
+    setScreens() {
+        this.screenScrollProps.isActive = true
+    }
+
     render() {
+        if (this.screenScrollProps.isActive) {
+            [document.querySelector('body')].forEach(dom => {
+                dom.style.cssText = 'position: relative; overflow: hidden; max-height: 100vh;'
+            })
+        }
         requestAnimationFrame(function animate(time) {
             this.#calculateScrollVelocity()
             this.handlers.forEach(hd => hd(this.mouse, this.scroll))
             TWEEN.update(time)
             requestAnimationFrame(animate.bind(this))
+            this.#scrollScreen()
         }.bind(this))
     }
 
@@ -107,18 +142,73 @@ class Renderer {
         }
         if (this.scroll.velocity === 0) this.scroll.scrolling = false
     }
+    #scrollScreen() {
+        if (!this.screenScrollProps.wheeling) this.screenScrollProps.prevWheeling = false
+        console.log(this.screenScrollProps.prevWheeling)
 
-    #preventMobileVerticalOrientation() {
+        if (!this.screenScrollProps.isActive) return
+        if (this.screenScrollProps.swiping) return
+        if (!this.screenScrollProps.wheeling) return
+        if (this.screenScrollProps.prevWheeling) return
+        this.screenScrollProps.prevWheeling = true
+        this.screenScrollProps.swiping = true
+        console.log("SWIPE!!!")
+
         
+        this.screenScrollProps.screensHeight = createScreensHeight()
+        this.screenScrollProps.activeScreen += (this.screenScrollProps.direction * -1)
+        // console.log(this.screenScrollProps.activeScreen)
+        
+        if (this.screenScrollProps.activeScreen >= this.screenScrollProps.screensHeight.length) --this.screenScrollProps.activeScreen
+        if (this.screenScrollProps.activeScreen < 0) ++this.screenScrollProps.activeScreen
+        
+        let scrollPosition = 0
+        for (let i = 0; i <= this.screenScrollProps.activeScreen; i++) {
+            console.log(this.screenScrollProps.screensHeight[i])
+            scrollPosition += this.screenScrollProps.screensHeight[i]
+        }
+
+        // window.scrollTo({
+        //     top: scrollPosition,
+        // })
+        gsap.to({y: window.pageYOffset}, { y: scrollPosition, 
+            onUpdate() {
+                const tween = this
+                window.scrollTo({
+                    top: tween.targets()[0].y,
+                })
+            },
+            ease: 'expo.inOut',
+            duration: this.swipeDuration / 1000
+        });
+
+        // const startPosition = { y: window.pageYOffset }
+        // const endPosition = { y: scrollPosition }
+        // new TWEEN.Tween(startPosition) 
+        //     .to(endPosition, this.swipeDuration)
+        //     .easing(TWEEN.Easing.Quadratic.InOut)
+        //     .onUpdate(() => {
+        //         window.scrollTo({
+        //             top: startPosition.y,
+        //         })
+        //         console.log(startPosition.y)
+        //     })
+        //     .start()
+        
+        setTimeout(function($this) {
+            $this.screenScrollProps.swiping = false
+        }, this.swipeDuration, this)
     }
 }
 
+
 const renderer = new Renderer()
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
     renderer.setHandler(mainLetters)
     renderer.setHandler(horizontalflow)
     renderer.setHandler(timeLaps)
     renderer.setHandler(platformMenu)
+    renderer.setScreens() // if u remove this line, ull get standart scroll
     renderer.render()
 })
 
@@ -131,7 +221,20 @@ document.addEventListener('mousemove', function(e) {
 })
 
 document.addEventListener('scroll', function(e) {
+    if (e.detail === undefined) return
     renderer.setScrollPosition({
-        scrolling: true
+        scrolling: true,
+        direction: e.detail.direction,
+        pageY: e.detail.pageY,
     })
+})
+
+document.addEventListener('wheel', function(e) {
+    this.dispatchEvent(new CustomEvent("scroll", {
+        bubbles: true, 
+        detail: {
+            direction: e.wheelDeltaY / Math.abs(e.wheelDeltaY),
+            pageY: e.pageY,
+        }
+    }))
 })

@@ -16,12 +16,16 @@ html {
       font-size: 0.83333333333333vw;
     }
     @media screen and (max-width: point(lg)) {
-      font-size: 1vw;
+      font-size: 0.83333333333333vw;
     }
     @media screen and (max-width: point(md)) {
-      font-size: 1vw;
+      font-size: 0.83333333333333vw;
     }
     @media screen and (max-width: point(sm)) {
       font-size: 5vw;
+    }
+
+    @media screen and (min-aspect-ratio: 17/9) {
+      font-size: 0.7vw;
     }
 }

@@ -1,7 +1,7 @@
 .platform-menu {
     position: relative;
     width: 100%;
-    height: 300vh;
+    height: 350vh;
     margin-top: -100vh;
     opacity: 0;
     transition: opacity .3s;
@@ -67,7 +67,23 @@
 
         &#addModelInstead {
             .img {
+                height: 90%;
+                background-size: contain;
                 background-image: url(./static/images/platform-menu/platform-layer.png);
+                background-repeat: no-repeat;
+                top: 50%;
+                transform: translateY(-50%);
+
+                @media screen and (max-aspect-ratio: 1350/1080) {
+                    width: 130% !important;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+                @media screen and (min-aspect-ratio: 2200/1080) {
+                    height: 85% !important;
+                    top: 55%;
+                }
             }
         }
     }
@@ -78,7 +94,7 @@
     display: flex;
     flex-direction: column;
     justify-content: stretch;
-    padding: 4rem;
+    padding: 2rem 4rem;
 
     .header__content:last-child {
         display: flex;
@@ -146,7 +162,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        margin-top: 4rem;
+        margin-top: 6rem;
     }
 
     .navigation__content {

@@ -10,12 +10,14 @@
 @import './components/platformMenu/platformMenu';
 
 html {
-  scroll-behavior: smooth;
   @include font-regular;
+  // scroll-behavior: smooth;
 }
 
 html, body {
   @media screen and (orientation:portrait) {
+    position: relative;
+    height: 100%;
     overflow: hidden;
   }
 }

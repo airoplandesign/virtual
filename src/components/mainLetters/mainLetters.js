@@ -15,7 +15,7 @@ export function mainLetters(mouse, scroll) {
         || elementToWatchHeight !== elementToWatch.getBoundingClientRect().height)  {
         elementBackgroundHeight = elementBackgroundWrapper.getBoundingClientRect().height
         elementToWatchHeight = elementToWatch.getBoundingClientRect().height
-        main.style.height = `${elementBackgroundHeight + elementToWatchHeight * 1.5}px`
+        main.style.height = `${elementBackgroundHeight + elementToWatchHeight}px`
     }
 
     Array.from(elementBackroundLayers).forEach((layer, idx) => {
@@ -29,11 +29,5 @@ export function mainLetters(mouse, scroll) {
     } else {
         elementToBlurMorz[1].classList.add('hide')
     }
-    // bear blur
-    // if (window.pageYOffset + window.innerHeight >= elementBackgroundHeight + elementToWatchHeight * 1.5) {
-    //     elementToBlurBear[1].classList.remove('hide')
-    // } else {
-    //     elementToBlurBear[1].classList.add('hide')
-    // }
 }
 

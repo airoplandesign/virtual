@@ -33,7 +33,6 @@ export const setMouseParallax = (domElement, mouse, translateCoef = 1) => {
     if (Math.abs(translateY - newTranslateY) < EASE_COEF) {
         newTranslateY = translateY
     }
-
     domElement.style.transform = `translate(${newTranslateX}px, ${newTranslateY}px) scale(1.1)`
 }
 
@@ -63,13 +62,12 @@ export function createScreensHeight() {
     return [
         0, //0
         Math.floor(screen1Container.getBoundingClientRect().height), //1 [0 -> 1]
-        Math.floor(screen2Container.getBoundingClientRect().height + (screen1Container.getBoundingClientRect().height * 0.5) - window.innerHeight), //2  [1 -> 2]
+        Math.floor(screen2Container.getBoundingClientRect().height - window.innerHeight), //2  [1 -> 2]
         Math.floor(screen3Container.getBoundingClientRect().width / 3), //3 [2 -> 3]
         Math.floor(screen3Container.getBoundingClientRect().width / 3), //4 [3 -> 4]
         Math.floor(screen4Container.getBoundingClientRect().height / 3), //5 [4 -> 5]
-        Math.floor(screen4Container.getBoundingClientRect().height / 3), //6 [5 -> 6]
-        Math.floor(screen4Container.getBoundingClientRect().height / 3), //7 [6 -> 7]
-        Math.floor(screen5Container.getBoundingClientRect().height) //8 [7 -> 8]
+        Math.floor(screen4Container.getBoundingClientRect().height / 3 + window.innerHeight), //6 [5 -> 6]
+        Math.floor(screen4Container.getBoundingClientRect().height / 3 - window.innerHeight), //7 [6 -> 7]
+        Math.floor(screen5Container.getBoundingClientRect().height + window.innerHeight) //8 [7 -> 8]
     ]
 }
-

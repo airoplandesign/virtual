@@ -13,7 +13,7 @@ let elementBackgroundWidth = 0
 export function horizontalflow(mouse, scroll) {
     if (elementBackgroundWidth !== horizontalFlowScreen.getBoundingClientRect().width)  {
         elementBackgroundWidth = horizontalFlowScreen.getBoundingClientRect().width
-        horizontalFlowContainer.style.height = `${elementBackgroundWidth + window.innerWidth + window.innerHeight}px` // when innerHeight we will start zooming
+        horizontalFlowContainer.style.height = `${elementBackgroundWidth + window.innerWidth}px` // when innerHeight we will start zooming
     }
 
     Array.from(elementBackroundLayers).forEach((layer, idx) => {
@@ -32,7 +32,7 @@ export function horizontalflow(mouse, scroll) {
     }
 
 
-    if (translate < elementBackgroundWidth - window.innerWidth) {
+    if (translate < elementBackgroundWidth) {
         [mainBackgroundContainer, horizontalBackgroundContainer].forEach(container => {
             container.style.transform = `translateX(${-translate}px)`
         })
@@ -43,25 +43,25 @@ export function horizontalflow(mouse, scroll) {
 
     // scale to birds
     const scaleParameter = 1 // max scale
-    let scaleTranslate = translate - (elementBackgroundWidth - window.innerWidth)
-    const scaleTranslateMax = window.innerWidth * 2
+    let scaleTranslate = translate - elementBackgroundWidth
+    const scaleTranslateMax = window.innerWidth
     const scale = scaleTranslate / scaleTranslateMax * scaleParameter
 
     const opacityParameter = 1
     const opacity = scaleTranslate / (scaleTranslateMax / 1.25) * opacityParameter
 
     if (scale < 0) return
-    if (scaleTranslate < elementBackgroundWidth + window.innerWidth + window.innerHeight) {
+    if (scaleTranslate < elementBackgroundWidth + window.innerWidth) {
         horizontalBackgroundContainer.style.opacity = 1 - opacity
-        if (scaleTranslate - window.innerHeight < 0) scaleTranslate = 1 + window.innerHeight
+        // if (scaleTranslate - window.innerHeight < 0) scaleTranslate = 1 + window.innerHeight
         scalabelContainer.style.transform = 
                         `
-                            translateX(${-(scaleTranslate - window.innerHeight)}px) 
+                            translateX(${-(scaleTranslate)}px) 
                             scale(${1 + scale})
                         `
     horizontalBackgroundContainer.style.transform = 
     `
-        translateX(${-(elementBackgroundWidth - window.innerWidth)}px) 
+        translateX(${-(elementBackgroundWidth + window.innerWidth)}px) 
     `
     return
     }

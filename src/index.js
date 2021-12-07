@@ -1,5 +1,6 @@
 const TWEEN = require('@tweenjs/tween.js')
 import gsap from 'gsap'
+import NewScroll from './scroll'
 import { horizontalflow } from './components/horizontalFlow/horizontalFlow'
 import { mainLetters } from './components/mainLetters/mainLetters'
 import { platformMenu } from './components/platformMenu/platformMenu'
@@ -8,7 +9,7 @@ import { timeLaps } from './components/timeLaps/timeLaps'
 import { createScreensHeight } from './functions'
 
 class Renderer {
-    swipeDuration = 1500
+    swipeDuration = 4000
     mouse = {
         moving: false,
         x: 0,
@@ -29,13 +30,14 @@ class Renderer {
         direction: null,
         swiping: false,
         pageY: null,
-        newPageY: null,
         prevWheeling: false,
         wheeling: false,
         wheelingTimeout: null
     }
-    constructor(handler = []) {
-        this.handlers = handler
+    constructor() {
+        this.handlers = []
+        this.screenScrollProps.pageY = null
+        window.scrollTo({top: 0})
     }
 
     setHandler(handler) {
@@ -56,7 +58,6 @@ class Renderer {
 
         this.scroll.scrolling = scroll.scrolling
         this.screenScrollProps.direction = scroll.direction || null
-        this.screenScrollProps.newPageY = scroll.pageY
         this.mouse.moving = false
     }
 
@@ -82,6 +83,8 @@ class Renderer {
     #calculateScrollVelocity() {
         const EASE_COEF = 0.05
 
+        let timeline = gsap.timeline() 
+
         const translateY = window.pageYOffset
         let newTranslateY = (translateY - 0) * EASE_COEF
         let newVelocityMax = 0
@@ -100,8 +103,9 @@ class Renderer {
             newVelocityMax = -((this.scroll.positions[1] - this.scroll.positions[0]) / (this.scroll.times[1] - this.scroll.times[0])) * 100
             if (Math.abs(newVelocityMax) > Math.abs(this.scroll.velocityMax)) { 
                 this.scroll.velocityMax = newVelocityMax
-                TWEEN.removeAll()
-                this.scroll.tween = []
+                // TWEEN.removeAll()
+                // this.scroll.tween = []
+                // timeline.kill()
             }
         } else {
             this.scroll.times = [this.scroll.times[1], timeNow]
@@ -109,8 +113,9 @@ class Renderer {
             newVelocityMax = -((this.scroll.positions[1] - this.scroll.positions[0]) / (this.scroll.times[1] - this.scroll.times[0])) * 100
             if (Math.abs(newVelocityMax) > Math.abs(this.scroll.velocityMax)) { 
                 this.scroll.velocityMax = newVelocityMax 
-                TWEEN.removeAll()
-                this.scroll.tween = []
+                // TWEEN.removeAll()
+                // this.scroll.tween = []
+                // timeline.kill()
             }
         }
 
@@ -119,37 +124,36 @@ class Renderer {
         startObj.y = this.scroll.velocity
         endObj.y = Math.abs(this.scroll.velocityMax) > 100 ? this.scroll.velocityMax / Math.abs(this.scroll.velocityMax) * 100 : this.scroll.velocityMax
 
-        if (this.scroll.tween.length === 0 && Math.abs(this.scroll.velocityMax) > 0) {
-            this.scroll.tween[0] = new TWEEN.Tween(startObj) 
-            .to(endObj, 300)
-            .easing(TWEEN.Easing.Quadratic.Out)
-            .onUpdate(() => {
-                this.scroll.velocity = startObj.y
-            })
-            .start()
-            this.scroll.tween[1] = new TWEEN.Tween(startObj) 
-            .to({y: 0}, 800)
-            .easing(TWEEN.Easing.Quadratic.InOut)
-            .onUpdate(() => {
-                this.scroll.velocity = startObj.y
-            })
-            .onComplete(() => {
-                TWEEN.removeAll()
-                this.scroll.tween = []
-                this.scroll.velocityMax = 0
-            })
-            this.scroll.tween[0].chain(this.scroll.tween[1])
+        if (Math.abs(this.scroll.velocityMax) > 0) {
+            let scrollVelocity = 0
+            timeline.to(startObj, { y: endObj.y, callbackScope: this,
+                onUpdate() {
+                    this.scroll.velocity = timeline.getChildren()[0].targets()[0].y
+                    scrollVelocity = timeline.getChildren()[0].targets()[0].y
+                },
+                ease: 'sine.inOut',
+                duration: 0.5
+            }).to({y: scrollVelocity}, { y: 0, callbackScope: this,
+                onUpdate() {
+                    this.scroll.velocity = timeline.getChildren()[0].targets()[0].y
+                },
+                onComplete() {
+                    this.scroll.velocityMax = 0
+                },
+                ease: 'sine.inOut',
+                duration: 0.5
+            });
         }
         if (this.scroll.velocity === 0) this.scroll.scrolling = false
     }
     #scrollScreen() {
         if (!this.screenScrollProps.wheeling) this.screenScrollProps.prevWheeling = false
-        console.log(this.screenScrollProps.prevWheeling)
 
         if (!this.screenScrollProps.isActive) return
         if (this.screenScrollProps.swiping) return
         if (!this.screenScrollProps.wheeling) return
         if (this.screenScrollProps.prevWheeling) return
+        if (this.screenScrollProps.direction === null) return
         this.screenScrollProps.prevWheeling = true
         this.screenScrollProps.swiping = true
         console.log("SWIPE!!!")
@@ -157,20 +161,15 @@ class Renderer {
         
         this.screenScrollProps.screensHeight = createScreensHeight()
         this.screenScrollProps.activeScreen += (this.screenScrollProps.direction * -1)
-        // console.log(this.screenScrollProps.activeScreen)
         
         if (this.screenScrollProps.activeScreen >= this.screenScrollProps.screensHeight.length) --this.screenScrollProps.activeScreen
         if (this.screenScrollProps.activeScreen < 0) ++this.screenScrollProps.activeScreen
         
         let scrollPosition = 0
         for (let i = 0; i <= this.screenScrollProps.activeScreen; i++) {
-            console.log(this.screenScrollProps.screensHeight[i])
             scrollPosition += this.screenScrollProps.screensHeight[i]
         }
 
-        // window.scrollTo({
-        //     top: scrollPosition,
-        // })
         gsap.to({y: window.pageYOffset}, { y: scrollPosition, 
             onUpdate() {
                 const tween = this
@@ -178,29 +177,21 @@ class Renderer {
                     top: tween.targets()[0].y,
                 })
             },
-            ease: 'expo.inOut',
+            ease: 'power2.inOut',
             duration: this.swipeDuration / 1000
         });
 
-        // const startPosition = { y: window.pageYOffset }
-        // const endPosition = { y: scrollPosition }
-        // new TWEEN.Tween(startPosition) 
-        //     .to(endPosition, this.swipeDuration)
-        //     .easing(TWEEN.Easing.Quadratic.InOut)
-        //     .onUpdate(() => {
-        //         window.scrollTo({
-        //             top: startPosition.y,
-        //         })
-        //         console.log(startPosition.y)
-        //     })
-        //     .start()
         
         setTimeout(function($this) {
             $this.screenScrollProps.swiping = false
+            $this.scroll.scrolling = false
         }, this.swipeDuration, this)
     }
 }
 
+const newScroll = new NewScroll()
+newScroll.mouseWheel()
+newScroll.touchMove()
 
 const renderer = new Renderer()
 window.addEventListener('load', function() {
@@ -208,7 +199,7 @@ window.addEventListener('load', function() {
     renderer.setHandler(horizontalflow)
     renderer.setHandler(timeLaps)
     renderer.setHandler(platformMenu)
-    renderer.setScreens() // if u remove this line, ull get standart scroll
+    renderer.setScreens()
     renderer.render()
 })
 
@@ -225,16 +216,9 @@ document.addEventListener('scroll', function(e) {
     renderer.setScrollPosition({
         scrolling: true,
         direction: e.detail.direction,
-        pageY: e.detail.pageY,
     })
 })
 
-document.addEventListener('wheel', function(e) {
-    this.dispatchEvent(new CustomEvent("scroll", {
-        bubbles: true, 
-        detail: {
-            direction: e.wheelDeltaY / Math.abs(e.wheelDeltaY),
-            pageY: e.pageY,
-        }
-    }))
-})
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+}

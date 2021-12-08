@@ -1,4 +1,5 @@
 import { setMouseParallax, setScrollParallax, getElementCoords, isElementVisible} from '../../functions'
+import gsap from 'gsap'
 
 const timeLapsContainer = document.querySelector('.time-laps')
 
@@ -21,18 +22,26 @@ const allLayers = [
     Array.from(platformViewContainer.querySelectorAll('.layer'))
 ]
 
-export function timeLaps(mouse, scroll) {
-    allLayers.forEach(layersGroup => {
+let timelines = []
+allLayers.forEach((layersGroup, idx) => {
+    timelines[idx] = []
+    layersGroup.forEach(() => {
+        timelines[idx].push(gsap.timeline())
+    })
+})
+
+export function timeLaps(mouse, scroll, swipeDuration) {
+    allLayers.forEach((layersGroup, i) => {
         layersGroup.forEach((layer, idx) => {
             if (!scroll.scrolling) setMouseParallax(layer, mouse, (1 + idx / 4))
-            setScrollParallax(layer, scroll, (1 + idx / 5))
+            setScrollParallax(layer, scroll, timelines[i][idx], idx * 10, swipeDuration)
         })
     })
 
     if (!isElementVisible(timeLapsContainer)) return
     const timeLapsContainerCoords = getElementCoords(timeLapsContainer)
     const translate = window.pageYOffset - timeLapsContainerCoords.top
-    const translateMax = timeLapsContainerCoords.height // if u make container bigger u get slower animation
+    const translateMax = timeLapsContainerCoords.height 
     
     const bgZoomCoef = 0.75
     birdsFromTopIceContainer.style.transform = `scale(${1 + bgZoomCoef})`

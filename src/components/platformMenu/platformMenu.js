@@ -1,12 +1,18 @@
 import { setMouseParallax, setScrollParallax, getElementCoords, isElementVisible} from '../../functions'
+import gsap from 'gsap'
 
 const platformMenuContainer = document.querySelector('.platform-menu')
 const elementBackroundLayers = document.querySelectorAll('.platform-menu__background .layer')
 
-export function platformMenu(mouse, scroll) {
+let timelines = []
+Array.from(elementBackroundLayers).forEach(() => {
+    timelines.push(gsap.timeline())
+})
+
+export function platformMenu(mouse, scroll, swipeDuration) {
     Array.from(elementBackroundLayers).forEach((layer, idx) => {
         if (!scroll.scrolling) setMouseParallax(layer, mouse, (1 + idx / 4))
-        setScrollParallax(layer, scroll, (1 + idx / 5))
+        setScrollParallax(layer, scroll, timelines[idx], idx * 10, swipeDuration)
     })
 
     if (!isElementVisible(platformMenuContainer)) return

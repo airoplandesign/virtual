@@ -44,6 +44,7 @@
     }
 
     .platform-menu__layers .layer {
+        transform: scale(1.1);
         &:nth-child(1) {
             .img {
                 background-image: url(./static/images/platform-menu/layer-4.png);
@@ -99,7 +100,7 @@
     .header__content:last-child {
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
     }
 
     .header {

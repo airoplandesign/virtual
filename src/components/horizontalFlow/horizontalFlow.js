@@ -1,4 +1,5 @@
 import { setMouseParallax, setScrollParallax, getElementCoords, isElementVisible} from '../../functions'
+import gsap from 'gsap'
 
 const elementBackroundLayers = document.querySelectorAll('.horizontal-flow__layers .layer')
 
@@ -10,7 +11,12 @@ const horizontalFlowScreen = document.querySelector('.horizontal-flow__screen')
 const scalabelContainer = document.querySelector('.horizontal-flow__screen .scalabel-container')
 let elementBackgroundWidth = 0
 
-export function horizontalflow(mouse, scroll) {
+let timelines = []
+Array.from(elementBackroundLayers).forEach(() => {
+    timelines.push(gsap.timeline())
+})
+
+export function horizontalflow(mouse, scroll, swipeDuration) {
     if (elementBackgroundWidth !== horizontalFlowScreen.getBoundingClientRect().width)  {
         elementBackgroundWidth = horizontalFlowScreen.getBoundingClientRect().width
         horizontalFlowContainer.style.height = `${elementBackgroundWidth + window.innerWidth}px` // when innerHeight we will start zooming
@@ -18,7 +24,7 @@ export function horizontalflow(mouse, scroll) {
 
     Array.from(elementBackroundLayers).forEach((layer, idx) => {
         if (!scroll.scrolling) setMouseParallax(layer, mouse, (1 + idx / 4))
-        setScrollParallax(layer, scroll, (1 + idx / 5))
+        setScrollParallax(layer, scroll, timelines[idx], idx * 10, swipeDuration)
     })
 
     // horizontal scroll
@@ -32,7 +38,12 @@ export function horizontalflow(mouse, scroll) {
     }
 
 
-    if (translate < elementBackgroundWidth) {
+    const delta = elementBackgroundWidth / 3 - window.innerWidth
+    let step = elementBackgroundWidth / 3
+    if (step < window.innerWidth) step = window.innerWidth
+    const specialHorizontalBackgroundWidth = 2 * step + delta
+
+    if (translate < specialHorizontalBackgroundWidth) {
         [mainBackgroundContainer, horizontalBackgroundContainer].forEach(container => {
             container.style.transform = `translateX(${-translate}px)`
         })
@@ -43,7 +54,7 @@ export function horizontalflow(mouse, scroll) {
 
     // scale to birds
     const scaleParameter = 1 // max scale
-    let scaleTranslate = translate - elementBackgroundWidth
+    let scaleTranslate = translate - specialHorizontalBackgroundWidth
     const scaleTranslateMax = window.innerWidth
     const scale = scaleTranslate / scaleTranslateMax * scaleParameter
 
@@ -51,25 +62,30 @@ export function horizontalflow(mouse, scroll) {
     const opacity = scaleTranslate / (scaleTranslateMax / 1.25) * opacityParameter
 
     if (scale < 0) return
-    if (scaleTranslate < elementBackgroundWidth + window.innerWidth) {
+    if (scaleTranslate < scaleTranslateMax) {
         horizontalBackgroundContainer.style.opacity = 1 - opacity
         // if (scaleTranslate - window.innerHeight < 0) scaleTranslate = 1 + window.innerHeight
         scalabelContainer.style.transform = 
                         `
-                            translateX(${-(scaleTranslate)}px) 
+                            translateX(${-(scaleTranslate)}px)
                             scale(${1 + scale})
                         `
-    horizontalBackgroundContainer.style.transform = 
-    `
-        translateX(${-(elementBackgroundWidth + window.innerWidth)}px) 
-    `
+        horizontalBackgroundContainer.style.transform = 
+                        `
+                            translateX(${-(specialHorizontalBackgroundWidth)}px) 
+                        `
     return
     }
 
     // basic if scrolled more
     horizontalBackgroundContainer.style.transform = 
     `
-        translateX(${-(elementBackgroundWidth - window.innerWidth)}px) 
+        translateX(${-(specialHorizontalBackgroundWidth)}px) 
     `
     horizontalBackgroundContainer.style.opacity = 0
+    scalabelContainer.style.transform = 
+    `
+        translateX(${-(scaleTranslateMax)}px)
+        scale(${2})
+    `
 }

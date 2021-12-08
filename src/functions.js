@@ -36,18 +36,43 @@ export const setMouseParallax = (domElement, mouse, translateCoef = 1) => {
     domElement.style.transform = `translate(${newTranslateX}px, ${newTranslateY}px) scale(1.1)`
 }
 
-export const setScrollParallax = (domElement, { velocity, scrolling }, translateCoef = 1, cb) => {
-    if (!scrolling) return
+export const setScrollParallax = (domElement, { scrolling, parallax }, timeline, translateCoef = 0, swipeDuration) => {
     if (!isElementVisible(domElement)) { 
         domElement.classList.remove('visible')   
         return
     }
+    if (!scrolling) return
+    if (!parallax) return
+
     if (!domElement.classList.contains('visible')) domElement.classList.add('visible')   
-    let newTranslateX = domElement.style.transform.split(', ')[0]
-    newTranslateX = newTranslateX ? parseFloat(newTranslateX.replace('translate(', '').replace('%', '')) : 0 
-    const translateVelocity = velocity * translateCoef
-    domElement.style.transform = `translate(${newTranslateX}px, ${translateVelocity}px) scale(1.1)`
-    if (typeof cb === "function") cb(domElement, { velocity, scrolling }, translateCoef)
+    const maxTranslate = { y: 50 + translateCoef }
+
+    let translateY = domElement.style.transform.split(', ')[1]
+    translateY = translateY ? parseFloat(translateY.replace('%)', '')) : 0 
+    let translateX = domElement.style.transform.split(', ')[0]
+    translateX = translateX ? parseFloat(translateX.replace('translate(', '').replace('%', '')) : 0 
+
+    let newTranslateY = translateY
+
+    timeline.to({y: translateY}, { y: maxTranslate.y,
+            onUpdate() {
+                newTranslateY = timeline.getChildren()[0].targets()[0].y
+                domElement.style.transform = `translate(${translateX}px, ${newTranslateY}px) scale(1.1)`
+            },
+            ease: "power3.inOut",
+            duration: swipeDuration / 1000 / 2
+            }, '<')
+    timeline.to({y: maxTranslate.y}, { y: translateY,
+            onUpdate() {
+                newTranslateY = timeline.getChildren()[1].targets()[0].y
+                domElement.style.transform = `translate(${translateX}px, ${newTranslateY}px) scale(1.1)`
+            },
+            onComplete() {
+                timeline.clear()
+            },
+            ease: "power3.inOut",
+            duration: swipeDuration / 1000 / 2
+        }, '>');
 }
 
 // used only 1 time in index.js
@@ -59,15 +84,25 @@ export function createScreensHeight() {
     const screen4Container = document.querySelector('#timeLaps') 
     const screen5Container = document.querySelector('#platformMenu') 
 
+    // for long horizontal screen. It took me 3 hours to understand algorithm...
+    // [2 -> 3 -> 4]
+    const delta = screen3Container.getBoundingClientRect().width / 3 - window.innerWidth
+    let step = screen3Container.getBoundingClientRect().width / 3
+    if (step < window.innerWidth) step = window.innerWidth
+    // 
+    // [4 -> 5 -> 6 -> 7] 
+    const half = screen4Container.getBoundingClientRect().height / 3 / 2
+    const step2 = screen4Container.getBoundingClientRect().height / 3
+
     return [
         0, //0
         Math.floor(screen1Container.getBoundingClientRect().height), //1 [0 -> 1]
         Math.floor(screen2Container.getBoundingClientRect().height - window.innerHeight), //2  [1 -> 2]
-        Math.floor(screen3Container.getBoundingClientRect().width / 3), //3 [2 -> 3]
-        Math.floor(screen3Container.getBoundingClientRect().width / 3), //4 [3 -> 4]
-        Math.floor(screen4Container.getBoundingClientRect().height / 3), //5 [4 -> 5]
-        Math.floor(screen4Container.getBoundingClientRect().height / 3 + window.innerHeight), //6 [5 -> 6]
-        Math.floor(screen4Container.getBoundingClientRect().height / 3 - window.innerHeight), //7 [6 -> 7]
+        Math.floor(step + delta / 2), //3 [2 -> 3]
+        Math.floor(step + delta / 2), //4 [3 -> 4]
+        Math.floor(step2 - half), //5 [4 -> 5]
+        Math.floor(step2 + half / 2), //6 [5 -> 6]
+        Math.floor(step2 - half / 3), //7 [6 -> 7]
         Math.floor(screen5Container.getBoundingClientRect().height + window.innerHeight) //8 [7 -> 8]
     ]
 }

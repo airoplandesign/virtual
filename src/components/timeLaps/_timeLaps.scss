@@ -37,6 +37,7 @@
         opacity: 0;
         &:first-child {
             .layer {
+                transform: scale(1.1);
                 &:nth-child(1) {
                     .img {
                         background-image: url(./static/images/time-laps/zoomed-birds/layer-1.png);
@@ -51,6 +52,7 @@
         }
         &:nth-child(2) {
             .layer {
+                transform: scale(1.1);
                 &:nth-child(1) {
                     .img {
                         background-image: url(./static/images/time-laps/birds-from-top/layer-1.png);
@@ -69,6 +71,7 @@
             }
         }
         &:nth-child(3) {
+            transform: scale(1.1);
             .layer {
                 &:nth-child(1) {
                     .img {

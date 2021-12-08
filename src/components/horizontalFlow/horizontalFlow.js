@@ -40,7 +40,9 @@ export function horizontalflow(mouse, scroll, swipeDuration) {
 
     const delta = elementBackgroundWidth / 3 - window.innerWidth
     let step = elementBackgroundWidth / 3
-    if (step < window.innerWidth) step = window.innerWidth
+    // if (step < window.innerWidth) step = window.innerWidth
+    if ((window.innerWidth / window.innerHeight < 16/9) && step < window.innerWidth) step = window.innerWidth
+
     const specialHorizontalBackgroundWidth = 2 * step + delta
 
     if (translate < specialHorizontalBackgroundWidth) {

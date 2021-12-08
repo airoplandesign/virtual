@@ -88,7 +88,11 @@ export function createScreensHeight() {
     // [2 -> 3 -> 4]
     const delta = screen3Container.getBoundingClientRect().width / 3 - window.innerWidth
     let step = screen3Container.getBoundingClientRect().width / 3
-    if (step < window.innerWidth) step = window.innerWidth
+    console.log(step, window.innerWidth)
+    if ((window.innerWidth / window.innerHeight < 16/9) && step <= window.innerWidth) step = window.innerWidth
+    console.log('-->', step)
+    // const specDelta = step
+
     // 
     // [4 -> 5 -> 6 -> 7] 
     const half = screen4Container.getBoundingClientRect().height / 3 / 2
@@ -100,8 +104,8 @@ export function createScreensHeight() {
         Math.floor(screen2Container.getBoundingClientRect().height - window.innerHeight), //2  [1 -> 2]
         Math.floor(step + delta / 2), //3 [2 -> 3]
         Math.floor(step + delta / 2), //4 [3 -> 4]
-        Math.floor(step2 - half), //5 [4 -> 5]
-        Math.floor(step2 + half / 2), //6 [5 -> 6]
+        Math.floor(step2 - delta - half / 3), //5 [4 -> 5]
+        Math.floor(step2 - delta + half / 5), //6 [5 -> 6]
         Math.floor(step2 - half / 3), //7 [6 -> 7]
         Math.floor(screen5Container.getBoundingClientRect().height + window.innerHeight) //8 [7 -> 8]
     ]

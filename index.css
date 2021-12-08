@@ -62,17 +62,22 @@ html {
 }
 @media screen and (max-width: 1440px) {
   html {
-    font-size: 1vw;
+    font-size: 0.8333333333vw;
   }
 }
 @media screen and (max-width: 1080px) {
   html {
-    font-size: 1vw;
+    font-size: 0.8333333333vw;
   }
 }
 @media screen and (max-width: 576px) {
   html {
     font-size: 5vw;
+  }
+}
+@media screen and (min-aspect-ratio: 17/9) {
+  html {
+    font-size: 0.7vw;
   }
 }
 
@@ -176,7 +181,7 @@ ul {
   height: 200vh;
   left: 0;
   top: 0;
-  transition: opacity 1s ease;
+  transition: 1s opacity;
   background-position: center;
   background-size: cover;
 }
@@ -200,6 +205,7 @@ ul {
 }
 .main-background .main-background__layers .hide {
   opacity: 0 !important;
+  transition: 3s opacity !important;
 }
 
 .horizontal-flow {
@@ -225,6 +231,11 @@ ul {
   height: 100%;
 }
 .horizontal-flow .horizontal-flow__layers .flow-container .horizontal-flow__screen {
+  position: relative;
+  width: auto;
+  height: 100%;
+}
+.horizontal-flow .horizontal-flow__layers .flow-container .horizontal-flow__screen .scalabel-container {
   position: relative;
   width: auto;
   height: 100%;
@@ -290,11 +301,21 @@ ul {
 .time-laps .stage-layers {
   opacity: 0;
 }
+.time-laps .stage-layers:first-child .layer {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
 .time-laps .stage-layers:first-child .layer:nth-child(1) .img {
   background-image: url(./static/images/time-laps/zoomed-birds/layer-1.png);
 }
 .time-laps .stage-layers:first-child .layer:nth-child(2) .img {
   background-image: url(./static/images/time-laps/zoomed-birds/layer-2.png);
+}
+.time-laps .stage-layers:nth-child(2) .layer {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 .time-laps .stage-layers:nth-child(2) .layer:nth-child(1) .img {
   background-image: url(./static/images/time-laps/birds-from-top/layer-1.png);
@@ -304,6 +325,11 @@ ul {
 }
 .time-laps .stage-layers:nth-child(2) .layer:nth-child(3) .img {
   background-image: url(./static/images/time-laps/birds-from-top/layer-3.png);
+}
+.time-laps .stage-layers:nth-child(3) {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 .time-laps .stage-layers:nth-child(3) .layer:nth-child(1) .img {
   background-image: url(./static/images/time-laps/platform-view/layer-1.png);
@@ -318,7 +344,7 @@ ul {
 .platform-menu {
   position: relative;
   width: 100%;
-  height: 300vh;
+  height: 350vh;
   margin-top: -100vh;
   opacity: 0;
   transition: opacity 0.3s;
@@ -356,6 +382,11 @@ ul {
   background-size: cover;
   background-position: center;
 }
+.platform-menu .platform-menu__layers .layer {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
 .platform-menu .platform-menu__layers .layer:nth-child(1) .img {
   background-image: url(./static/images/platform-menu/layer-4.png);
 }
@@ -369,7 +400,29 @@ ul {
   background-image: url(./static/images/platform-menu/layer-1.png);
 }
 .platform-menu .platform-menu__layers .layer#addModelInstead .img {
+  height: 90%;
+  background-size: contain;
   background-image: url(./static/images/platform-menu/platform-layer.png);
+  background-repeat: no-repeat;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+@media screen and (max-aspect-ratio: 1350/1080) {
+  .platform-menu .platform-menu__layers .layer#addModelInstead .img {
+    width: 130% !important;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+@media screen and (min-aspect-ratio: 2200/1080) {
+  .platform-menu .platform-menu__layers .layer#addModelInstead .img {
+    height: 85% !important;
+    top: 55%;
+  }
 }
 
 .platform-menu .platform-menu__controls {
@@ -379,7 +432,7 @@ ul {
   flex-direction: column;
   -ms-flex-pack: stretch;
   justify-content: stretch;
-  padding: 4rem;
+  padding: 2rem 4rem;
 }
 .platform-menu .platform-menu__controls .header__content:last-child {
   display: -ms-flexbox;
@@ -387,7 +440,7 @@ ul {
   -ms-flex-align: center;
   align-items: center;
   -ms-flex-pack: start;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .platform-menu .platform-menu__controls .header {
   width: 100%;
@@ -451,7 +504,7 @@ ul {
   justify-content: space-between;
   -ms-flex-align: start;
   align-items: flex-start;
-  margin-top: 4rem;
+  margin-top: 6rem;
 }
 .platform-menu .platform-menu__controls .navigation__content {
   display: -ms-flexbox;
@@ -502,13 +555,14 @@ ul {
 }
 
 html {
-  scroll-behavior: smooth;
   font-family: "din", sans-serif;
   font-weight: normal;
 }
 
 @media screen and (orientation: portrait) {
   html, body {
+    position: relative;
+    height: 100%;
     overflow: hidden;
   }
 }

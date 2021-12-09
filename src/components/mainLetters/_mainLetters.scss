@@ -93,10 +93,7 @@
                     }
                 }
                 &:nth-child(4) {
-                    .img:first-child {
-                        background-image: url(./static/images/main-letters/layer-4-blur.png);
-                    }
-                    .img:last-child {
+                    .img {
                         background-image: url(./static/images/main-letters/layer-4.png);
                     }
                 }

@@ -65,6 +65,13 @@
                 }
                 &:nth-child(3) {
                     .img {
+                        margin-top: 5%;
+                        margin-left: 2.5%;
+                        height: 80%;
+                        width: 90%;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-size: contain;
                         background-image: url(./static/images/time-laps/birds-from-top/layer-3.png);
                     }
                 }

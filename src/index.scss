@@ -8,6 +8,7 @@
 @import './components/horizontalFlow/horizontalFlow';
 @import './components/timeLaps/timeLaps';
 @import './components/platformMenu/platformMenu';
+@import './components/preloader/preloader';
 
 html {
   @include font-regular;
@@ -19,12 +20,21 @@ html, body {
     position: relative;
     height: 100%;
     overflow: hidden;
+    max-height: 100vh;
   }
+  // background-color: color('blue');
+}
+
+body {
+  position: relative;
+  overflow: hidden;
+  max-height: 100vh;
+  height: 100%;
 }
 
 .root {
   &:before {
-    content: 'Используйте сайт в горизонтальной ориентации!';
+    content: '';
     position: fixed;
     width: 100%;
     height: 100%;
@@ -36,7 +46,7 @@ html, body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 1rem;
+    padding: 4rem;
     opacity: 0;
     visibility: hidden;
     transition: opacity .3s ease, visibility .3s ease;
@@ -47,12 +57,39 @@ html, body {
       font-size: 1rem;
     }
   }
+
+  &:after {
+    content: url(./static/svg/rotation-message.svg);
+    position: fixed;
+    width: 50vw;
+    height: 50vw;
+    left: calc(50% - 50vw / 2);
+    top: calc(50% - 50vw / 2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+    box-sizing: border-box;
+    z-index: 1001;
+  }
   @media screen and (orientation:portrait) {
-    &:before {
+    &:before, &:after {
       opacity: 1;
       visibility: visible;
+    }
+
+    &:after {
+      animation: 40s rotation infinite forwards linear;
     }
   }
 
 
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

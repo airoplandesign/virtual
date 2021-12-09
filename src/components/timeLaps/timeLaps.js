@@ -33,8 +33,8 @@ allLayers.forEach((layersGroup, idx) => {
 export function timeLaps(mouse, scroll, swipeDuration) {
     allLayers.forEach((layersGroup, i) => {
         layersGroup.forEach((layer, idx) => {
-            if (!scroll.scrolling) setMouseParallax(layer, mouse, (1 + idx / 4))
-            setScrollParallax(layer, scroll, timelines[i][idx], idx * 10, swipeDuration)
+            if (!scroll.scrolling) setMouseParallax(layer, mouse, (1 + idx))
+            setScrollParallax(layer, scroll, timelines[i][idx], idx * 10 + idx * 2, swipeDuration)
         })
     })
 

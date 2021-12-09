@@ -23,8 +23,8 @@ export function horizontalflow(mouse, scroll, swipeDuration) {
     }
 
     Array.from(elementBackroundLayers).forEach((layer, idx) => {
-        if (!scroll.scrolling) setMouseParallax(layer, mouse, (1 + idx / 4))
-        setScrollParallax(layer, scroll, timelines[idx], idx * 10, swipeDuration)
+        if (!scroll.scrolling) setMouseParallax(layer, mouse, (1 + idx))
+        setScrollParallax(layer, scroll, timelines[idx], idx * 20 + idx * 2, swipeDuration)
     })
 
     // horizontal scroll

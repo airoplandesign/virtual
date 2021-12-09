@@ -5,7 +5,8 @@ import { mainLetters } from './components/mainLetters/mainLetters'
 import { platformMenu } from './components/platformMenu/platformMenu'
 import { timeLaps } from './components/timeLaps/timeLaps'
 
-import { createScreensHeight, isElementVisible } from './functions'
+import { createScreensHeight } from './functions'
+import { preloader } from './components/preloader/preloader'
 
 class Renderer {
     swipeDuration = 4000
@@ -62,11 +63,11 @@ class Renderer {
     }
 
     render() {
-        if (this.screenScrollProps.isActive) {
-            [document.querySelector('body')].forEach(dom => {
-                dom.style.cssText = 'position: relative; overflow: hidden; max-height: 100vh;'
-            })
-        }
+        // if (this.screenScrollProps.isActive) {
+        //     [document.querySelector('body')].forEach(dom => {
+        //         dom.style.cssText = 'position: relative; overflow: hidden; max-height: 100vh;'
+        //     })
+        // }
         requestAnimationFrame(function animate(time) {
             this.handlers.forEach(hd => hd(this.mouse, this.scroll, this.swipeDuration))
             requestAnimationFrame(animate.bind(this))
@@ -124,6 +125,8 @@ class Renderer {
         }, this.swipeDuration, this)
     }
 }
+
+preloader()
 
 const newScroll = new NewScroll()
 newScroll.mouseWheel()

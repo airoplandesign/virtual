@@ -88,10 +88,7 @@ export function createScreensHeight() {
     // [2 -> 3 -> 4]
     const delta = screen3Container.getBoundingClientRect().width / 3 - window.innerWidth
     let step = screen3Container.getBoundingClientRect().width / 3
-    console.log(step, window.innerWidth)
     if ((window.innerWidth / window.innerHeight < 16/9) && step <= window.innerWidth) step = window.innerWidth
-    console.log('-->', step)
-    // const specDelta = step
 
     // 
     // [4 -> 5 -> 6 -> 7] 

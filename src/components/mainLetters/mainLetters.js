@@ -25,17 +25,17 @@ export function mainLetters(mouse, scroll, swipeDuration) {
     }
 
     Array.from(elementBackroundLayers).forEach((layer, idx) => {
-        if (!scroll.scrolling) setMouseParallax(layer, mouse, (1 + idx / 4))
-        setScrollParallax(layer, scroll, timelines[idx], idx * 10, swipeDuration)
+        if (!scroll.scrolling) setMouseParallax(layer, mouse, (1 + idx))
+        setScrollParallax(layer, scroll, timelines[idx], idx * 10 + idx * 2, swipeDuration)
     })
 
     // morz blur
-    if (window.pageYOffset >= elementToWatchHeight) {
-        elementToBlurMorz[1].classList.remove('hide')
-        elementToBlurMorz[0].classList.add('hide')
-    } else {
-        elementToBlurMorz[1].classList.add('hide')
-        elementToBlurMorz[0].classList.remove('hide')
-    }
+    // if (window.pageYOffset >= elementToWatchHeight) {
+    //     elementToBlurMorz[1].classList.remove('hide')
+    //     elementToBlurMorz[0].classList.add('hide')
+    // } else {
+    //     elementToBlurMorz[1].classList.add('hide')
+    //     elementToBlurMorz[0].classList.remove('hide')
+    // }
 }
 

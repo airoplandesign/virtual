@@ -1,4 +1,3 @@
-@charset "UTF-8";
 :root {
   --color-white: #FFFFFF;
   --color-blue: #005EB8;
@@ -20,28 +19,28 @@
 
 @font-face {
   font-family: "din";
-  src: url("../static/fonts/GPN_DIN-Bold.ttf") format("opentype");
+  src: url("./static/fonts/GPN_DIN-Bold.ttf") format("opentype");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "din";
-  src: url("../static/fonts/GPN_DIN-Regular.ttf") format("opentype");
+  src: url("./static/fonts/GPN_DIN-Regular.ttf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "din condensed";
-  src: url("../static/fonts/GPN_Helios_Condensed-Bold.ttf") format("opentype");
+  src: url("./static/fonts/GPN_Helios_Condensed-Bold.ttf") format("opentype");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "din condensed";
-  src: url("../static/fonts/GPN_Helios_Condensed-Regular.ttf") format("opentype");
+  src: url("./static/fonts/GPN_Helios_Condensed-Regular.ttf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -197,10 +196,7 @@ ul {
 .main-background .main-background__layers .flow-container .layer:nth-child(3) .img {
   background-image: url(./static/images/main-letters/layer-3.png);
 }
-.main-background .main-background__layers .flow-container .layer:nth-child(4) .img:first-child {
-  background-image: url(./static/images/main-letters/layer-4-blur.png);
-}
-.main-background .main-background__layers .flow-container .layer:nth-child(4) .img:last-child {
+.main-background .main-background__layers .flow-container .layer:nth-child(4) .img {
   background-image: url(./static/images/main-letters/layer-4.png);
 }
 .main-background .main-background__layers .hide {
@@ -324,6 +320,13 @@ ul {
   background-image: url(./static/images/time-laps/birds-from-top/layer-2.png);
 }
 .time-laps .stage-layers:nth-child(2) .layer:nth-child(3) .img {
+  margin-top: 5%;
+  margin-left: 2.5%;
+  height: 80%;
+  width: 90%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   background-image: url(./static/images/time-laps/birds-from-top/layer-3.png);
 }
 .time-laps .stage-layers:nth-child(3) {
@@ -554,6 +557,139 @@ ul {
   margin-top: 5rem;
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+}
+
+.preloader {
+  position: fixed;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: #313197;
+  z-index: 9999;
+}
+
+.preloader__wrapp {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.perc_load {
+  display: block;
+  width: 350px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.preloader_bg {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #313197;
+  z-index: 9999;
+  transition: 0.4s;
+}
+
+.anim-0-0 {
+  -webkit-animation: moveLineRight 2.5s infinite ease-out;
+  animation: moveLineRight 2.5s infinite ease-out;
+}
+
+.anim-1-1 {
+  -webkit-animation: moveLineLeft 2s infinite ease-out;
+  animation: moveLineLeft 2s infinite ease-out;
+}
+
+.anim-2-2 {
+  -webkit-animation: moveLineLeft 1.5s infinite ease-out;
+  animation: moveLineLeft 1.5s infinite ease-out;
+}
+
+.anim-3-3 {
+  -webkit-animation: moveLineLeft 3s infinite ease-out;
+  animation: moveLineLeft 3s infinite ease-out;
+}
+
+@-webkit-keyframes moveLineRight {
+  0% {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+  50% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+}
+
+@keyframes moveLineRight {
+  0% {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+  50% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+}
+@-webkit-keyframes moveLineLeft {
+  0% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+  50% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+}
+@keyframes moveLineLeft {
+  0% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+  50% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+}
+@media (max-width: 650px) {
+  .perc_load {
+    width: 150px;
+  }
+}
 html {
   font-family: "din", sans-serif;
   font-weight: normal;
@@ -564,11 +700,19 @@ html {
     position: relative;
     height: 100%;
     overflow: hidden;
+    max-height: 100vh;
   }
 }
 
+body {
+  position: relative;
+  overflow: hidden;
+  max-height: 100vh;
+  height: 100%;
+}
+
 .root:before {
-  content: "Используйте сайт в горизонтальной ориентации!";
+  content: "";
   position: fixed;
   width: 100%;
   height: 100%;
@@ -584,7 +728,7 @@ html {
   -ms-flex-align: center;
   align-items: center;
   text-align: center;
-  padding: 1rem;
+  padding: 4rem;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -596,9 +740,48 @@ html {
     font-size: 1rem;
   }
 }
+.root:after {
+  content: url(./static/svg/rotation-message.svg);
+  position: fixed;
+  width: 50vw;
+  height: 50vw;
+  left: calc(50% - 25vw);
+  top: calc(50% - 25vw);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  box-sizing: border-box;
+  z-index: 1001;
+}
 @media screen and (orientation: portrait) {
-  .root:before {
+  .root:before, .root:after {
     opacity: 1;
     visibility: visible;
+  }
+  .root:after {
+    -webkit-animation: 40s rotation infinite forwards linear;
+    animation: 40s rotation infinite forwards linear;
+  }
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }

@@ -93,3 +93,16 @@ body {
     transform: rotate(360deg);
   }
 }
+
+
+.color-layer {
+  z-index: -1;
+}
+
+.color-blue {
+  background-color: color('blue-light');
+}
+
+.color-white {
+  background-color: color('white');
+}

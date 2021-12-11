@@ -53,7 +53,6 @@ class Renderer {
             $this.screenScrollProps.wheeling = false;
         }, 10, this);
 
-        this.scroll.scrolling = scroll.scrolling
         this.screenScrollProps.direction = scroll.direction || null
         this.mouse.moving = false
     }
@@ -78,10 +77,9 @@ class Renderer {
     }
 
     #scrollScreen() {
-        if (!this.screenScrollProps.wheeling) this.screenScrollProps.prevWheeling = false
-
         if (!this.screenScrollProps.isActive) return
         if (this.screenScrollProps.swiping) return
+        if (!this.screenScrollProps.wheeling) this.screenScrollProps.prevWheeling = false
         if (!this.screenScrollProps.wheeling) return
         if (this.screenScrollProps.prevWheeling) return
         if (this.screenScrollProps.direction === null) return
@@ -98,6 +96,7 @@ class Renderer {
             return
         }
 
+        this.scroll.scrolling = true
         this.screenScrollProps.prevWheeling = true
         this.screenScrollProps.swiping = true
         this.scroll.parallax = true
@@ -114,7 +113,7 @@ class Renderer {
                     top: this.targets()[0].y,
                 })
             },
-            ease: 'power2.inOut',
+            ease: 'sin.inOut',
             duration: this.swipeDuration / 1000
         });
 
@@ -153,7 +152,7 @@ document.addEventListener('mousemove', function(e) {
 document.addEventListener('scroll', function(e) {
     if (e.detail === undefined) return
     renderer.setScrollPosition({
-        scrolling: true,
+        // scrolling: true,
         direction: e.detail.direction,
     })
 })

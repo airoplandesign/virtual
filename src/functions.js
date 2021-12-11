@@ -59,7 +59,7 @@ export const setScrollParallax = (domElement, { scrolling, parallax }, timeline,
                 newTranslateY = timeline.getChildren()[0].targets()[0].y
                 domElement.style.transform = `translate(${translateX}px, ${newTranslateY}px) scale(1.1)`
             },
-            ease: "power3.inOut",
+            ease: "power2.inOut",
             duration: swipeDuration / 1000 / 2
             }, '<')
     timeline.to({y: maxTranslate.y}, { y: translateY,
@@ -70,7 +70,7 @@ export const setScrollParallax = (domElement, { scrolling, parallax }, timeline,
             onComplete() {
                 timeline.clear()
             },
-            ease: "power3.inOut",
+            ease: "power2.inOut",
             duration: swipeDuration / 1000 / 2
         }, '>');
 }
@@ -101,7 +101,7 @@ export function createScreensHeight() {
         Math.floor(screen2Container.getBoundingClientRect().height - window.innerHeight), //2  [1 -> 2]
         Math.floor(step + delta / 2), //3 [2 -> 3]
         Math.floor(step + delta / 2), //4 [3 -> 4]
-        Math.floor(step2 - delta - half / 3), //5 [4 -> 5]
+        Math.floor(step2 - delta - half / 3 - window.innerHeight), //5 [4 -> 5]
         Math.floor(step2 - delta + half / 5), //6 [5 -> 6]
         Math.floor(step2 - half / 3), //7 [6 -> 7]
         Math.floor(screen5Container.getBoundingClientRect().height + window.innerHeight) //8 [7 -> 8]

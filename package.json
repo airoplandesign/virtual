@@ -13,7 +13,6 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uncss": "^1.0.6",
     "gulp-watch": "^5.0.1",
-    "jquery": "^3.6.0",
     "webpack-stream": "^7.0.0",
     "yargs": "^17.3.0"
   },

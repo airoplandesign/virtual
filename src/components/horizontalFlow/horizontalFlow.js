@@ -51,33 +51,44 @@ export function horizontalflow(mouse, scroll, swipeDuration) {
         })
         horizontalBackgroundContainer.style.opacity = ''
         scalabelContainer.style.transform = ''
+        // scalabelContainer.style.opacity = ''
         return
     }
 
     // scale to birds
-    const scaleParameter = 1 // max scale
+    const scaleParameter = 1.5 // max scale
     let scaleTranslate = translate - specialHorizontalBackgroundWidth
-    const scaleTranslateMax = window.innerWidth
+    let scaleTranslateMax = window.innerWidth
     const scale = scaleTranslate / scaleTranslateMax * scaleParameter
 
     const opacityParameter = 1
-    const opacity = scaleTranslate / (scaleTranslateMax / 1.25) * opacityParameter
+    const opacity = scaleTranslate / (scaleTranslateMax * 0.8) * opacityParameter
 
     if (scale < 0) return
     if (scaleTranslate < scaleTranslateMax) {
+        // Array.from(elementBackroundLayers).forEach(layer => layer.style.opacity = 1 - opacity)
         horizontalBackgroundContainer.style.opacity = 1 - opacity
         // if (scaleTranslate - window.innerHeight < 0) scaleTranslate = 1 + window.innerHeight
         scalabelContainer.style.transform = 
                         `
-                            translateX(${-(scaleTranslate)}px)
+                            translate(${-(scaleTranslate * 1.55)}px, ${(scaleTranslate / 2.5 / (elementBackgroundWidth / window.innerHeight))}px)
                             scale(${1 + scale})
                         `
         horizontalBackgroundContainer.style.transform = 
                         `
                             translateX(${-(specialHorizontalBackgroundWidth)}px) 
                         `
+        // scalabelContainer.style.opacity = 1 - opacity
     return
     }
+    // scaleTranslate = scaleTranslate - specialHorizontalBackgroundWidth * 0.7
+    // scaleTranslateMax = specialHorizontalBackgroundWidth * 0.3
+    // opacity = scaleTranslate / scaleTranslateMax * opacityParameter
+
+    // if (scaleTranslate > 0 && scaleTranslate < scaleTranslateMax) {
+    //     scalabelContainer.style.opacity = 1 - opacity
+    //     return
+    // }
 
     // basic if scrolled more
     horizontalBackgroundContainer.style.transform = 
@@ -85,9 +96,11 @@ export function horizontalflow(mouse, scroll, swipeDuration) {
         translateX(${-(specialHorizontalBackgroundWidth)}px) 
     `
     horizontalBackgroundContainer.style.opacity = 0
+    // Array.from(elementBackroundLayers).forEach(layer => layer.style.opacity = 0)
     scalabelContainer.style.transform = 
     `
-        translateX(${-(scaleTranslateMax)}px)
-        scale(${2})
+        translate(${-(scaleTranslateMax * 1.55)}px, ${(scaleTranslateMax / 2.5 / (elementBackgroundWidth / window.innerHeight))}px)
+        scale(${2.5})
     `
+    // scalabelContainer.style.opacity = 0
 }

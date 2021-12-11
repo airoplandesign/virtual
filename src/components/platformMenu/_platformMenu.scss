@@ -5,6 +5,7 @@
     margin-top: -100vh;
     opacity: 0;
     transition: opacity .3s;
+    background-color: color('blue');
 
     &.visible {
     }
@@ -95,7 +96,7 @@
     display: flex;
     flex-direction: column;
     justify-content: stretch;
-    padding: 2rem 4rem;
+    padding: 3.375rem 11.8125rem;
 
     .header__content:last-child {
         display: flex;
@@ -163,7 +164,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        margin-top: 6rem;
+        margin-top: 8.375rem;
     }
 
     .navigation__content {
@@ -173,15 +174,15 @@
         &:first-child {
             align-items: flex-start;
 
-            a:before {
-                left: 0;
+            a:before, a:after {
+                left: -1.375rem;
             }
         }
         &:last-child {
             align-items: flex-end;
 
-            a:before {
-                right: 0;
+            a:before, a:after {
+                right: -1.375rem;
             }
         }
 
@@ -189,30 +190,48 @@
             position: relative;
             @include font-regular;
             @include font-40;
-            color: color('blue');
+            color: color('blue-dark');
             cursor: pointer;
             transition: color .3s ease;
 
             &:before {
                 content: '';
                 position: absolute;
-                bottom: calc(100% + .5rem);
+                bottom: calc(100% + 2rem);
                 width: 20.625rem;
                 height: 2px;
-                background-color: color('blue');
+                background-color: color('blue-dark');
                 transition: background-color .3s ease;
             }
 
             &:hover {
                 color: color('orange');
 
-                &:before {
-                    background-color: color('orange');
+                &:before, &:after {
+                    background-color: color('orange') !important;
+                }
+
+                + a {
+                    &:before {
+                        background-color: color('orange');
+                    }
                 }
             }
 
             &:not(:first-child) {
-                margin-top: 5rem;
+                margin-top: 7.5rem;
+            }
+
+            &:last-child {
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: calc(100% + 5.5rem);
+                    width: 20.625rem;
+                    height: 2px;
+                    background-color: color('blue-dark');
+                    transition: background-color .3s ease;
+                }
             }
         }
     }

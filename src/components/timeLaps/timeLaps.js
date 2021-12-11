@@ -43,14 +43,13 @@ export function timeLaps(mouse, scroll, swipeDuration) {
     const translate = window.pageYOffset - timeLapsContainerCoords.top
     const translateMax = timeLapsContainerCoords.height 
     
-    const bgZoomCoef = 0.75
+    const bgZoomCoef = 0.4
     birdsFromTopIceContainer.style.transform = `scale(${1 + bgZoomCoef})`
+    birdsFromTopWhaliesContainer.style.transform = `scale(${1 + bgZoomCoef})`
     birdsFromTopIceContainer.style.opacity = ''
     birdsFromTopWhaliesContainer.style.opacity = ''
     birdsFromTopContainer.style.opacity = ''
     zoomedBirdsContainer.style.opacity = ''
-
-    birdsFromTopWhaliesContainer.style.transform = ``
 
     platformViewContainer.style.transform = `scale(${1 + bgZoomCoef})`
     platformViewContainer.style.opacity = ''
@@ -80,9 +79,10 @@ export function timeLaps(mouse, scroll, swipeDuration) {
 
         // appearing canvas
         if (translate < iterationHalf1) {
-            const scaleTranslateMax = iterationHalf1 / 3
+            const scaleTranslateMax = iterationHalf1 / 2
             const opacity = scaleTranslate / scaleTranslateMax * opacityParameter
             zoomedBirdsContainer.style.opacity = 0 + opacity
+            // zoomedBirdsContainer.style.opacity = 1
             return
         }
 
@@ -91,6 +91,7 @@ export function timeLaps(mouse, scroll, swipeDuration) {
             const scaleTranslateMax = iterationTimelineMax1
             const opacity = scaleTranslate / scaleTranslateMax * opacityParameter
             zoomedBirdsContainer.style.opacity = 1 - opacity
+            
             return
         }
         return
@@ -113,7 +114,7 @@ export function timeLaps(mouse, scroll, swipeDuration) {
         // appearing bg
         scaleTranslate = scaleTranslate - iterationHalf1 / 3
         if (scaleTranslate < iterationHalf1 / 2) {
-            const scaleTranslateMax = iterationHalf1 / 2
+            const scaleTranslateMax = iterationHalf1 / 5
             const opacity = scaleTranslate / scaleTranslateMax * opacityParameter
             birdsFromTopIceContainer.style.opacity = 0 + opacity
             birdsFromTopWhaliesContainer.style.opacity = 0 + opacity
@@ -135,7 +136,7 @@ export function timeLaps(mouse, scroll, swipeDuration) {
 
             birdsFromTopContainer.style.opacity = 1 - opacity
             birdsFromTopIceContainer.style.transform = `scale(${1 + bgZoomCoef - zoomOutBg})`
-            birdsFromTopWhaliesContainer.style.transform = `scale(${1 - zoomOut})`
+            birdsFromTopWhaliesContainer.style.transform = `scale(${1 + bgZoomCoef - zoomOut})`
             // birdsFromTopBirdsContainer.style.transform = `scale(${1 - zoomOut})`
             return
         }

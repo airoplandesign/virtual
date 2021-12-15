@@ -809,6 +809,14 @@ body {
   }
 }
 
+.root.sound-off {
+  cursor: url(./static/svg/sound-off.svg) 50 50, auto;
+}
+
+.root.sound-on {
+  cursor: url(./static/svg/sound-on.svg) 50 50, auto;
+}
+
 @-webkit-keyframes rotation {
   from {
     -webkit-transform: rotate(0deg);

@@ -45,7 +45,7 @@ export const setScrollParallax = (domElement, { scrolling, parallax }, timeline,
     if (!parallax) return
 
     if (!domElement.classList.contains('visible')) domElement.classList.add('visible')   
-    const maxTranslate = { y: 50 + translateCoef }
+    const maxTranslate = { y: 20 + translateCoef }
 
     let translateY = domElement.style.transform.split(', ')[1]
     translateY = translateY ? parseFloat(translateY.replace('%)', '')) : 0 

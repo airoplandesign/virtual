@@ -36,11 +36,18 @@ export function platformMenu(mouse, scroll, swipeDuration) {
     
         // console.log(opacity)
         platformMenuContainer.style.opacity = 0 + opacity
-        if (platformMenuContainer.classList.contains('visible')) platformMenuContainer.classList.remove('visible')
+        if (platformMenuContainer.classList.contains('visible')) {
+            platformMenuContainer.classList.remove('visible')
+            document.querySelector('.root').classList.add('sound-off')
+        }
         return
     }
 
-    if (!platformMenuContainer.classList.contains('visible')) platformMenuContainer.classList.add('visible')
+    if (!platformMenuContainer.classList.contains('visible')) { 
+        document.querySelector('.root').classList.remove('sound-on')
+        document.querySelector('.root').classList.remove('sound-off')
+        platformMenuContainer.classList.add('visible') 
+    }
     platformMenuContainer.style.opacity = 1
     
 }

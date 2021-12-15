@@ -160,3 +160,8 @@ document.addEventListener('scroll', function(e) {
 window.onbeforeunload = function () {
     window.scrollTo(0, 0);
 }
+
+document.addEventListener('click', function() {
+    document.querySelector('.root').classList.toggle('sound-on')
+    document.querySelector('.root').classList.toggle('sound-off')
+})

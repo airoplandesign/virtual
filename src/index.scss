@@ -81,8 +81,14 @@ body {
       animation: 40s rotation infinite forwards linear;
     }
   }
+}
 
+.root.sound-off {
+  cursor:  url(./static/svg/sound-off.svg) 50 50, auto;
+}
 
+.root.sound-on {
+  cursor:  url(./static/svg/sound-on.svg) 50 50, auto;
 }
 
 @keyframes rotation {

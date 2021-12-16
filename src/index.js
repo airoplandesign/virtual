@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import NewScroll from './scroll'
+
 import { horizontalflow } from './components/horizontalFlow/horizontalFlow'
 import { mainLetters } from './components/mainLetters/mainLetters'
 import { platformMenu } from './components/platformMenu/platformMenu'
@@ -7,6 +8,8 @@ import { timeLaps } from './components/timeLaps/timeLaps'
 
 import { createScreensHeight } from './functions'
 import { preloader } from './components/preloader/preloader'
+
+import './MainModel.ts'
 
 class Renderer {
     swipeDuration = 4000
@@ -126,6 +129,8 @@ class Renderer {
 }
 
 preloader()
+
+const model = new MainModel
 
 const newScroll = new NewScroll()
 newScroll.mouseWheel()

@@ -113,6 +113,7 @@ export function _watch() {
 
   gulp.watch('./src/**/*.html', html); 
   gulp.watch('./src/**/*.js', scripts);
+  gulp.watch('./src/**/*.ts', scripts);
   gulp.watch('./src/**/*.scss', styles);
   gulp.watch('./src/static/**', staticData);
   gulp.watch('./build/**/*.html', browserSync.reload); 
